@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Millet Bites</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fdfdfd;
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #2e7d32;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 25px;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    nav a {
+      color: white;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #c8e6c9;
+    }
+    .hero {
+      text-align: center;
+      padding: 40px 20px;
+      background: #e8f5e9;
+    }
+    .slideshow-container {
+      position: relative;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .slides {
+      display: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+    }
+    .slide-text {
+      margin-top: 25px;
+    }
+    .hero h2 {
+      font-size: 1.8em;
+      color: #2e7d32;
+    }
+    .hero p {
+      font-size: 1.1em;
+      color: #555;
+      font-weight: bold;
+    }
+    .menu {
+      padding: 40px 20px;
+      background-color: #f1f8e9;
+    }
+    .menu h2 {
+      text-align: center;
+      font-size: 2em;
+      color: #33691e;
+      margin-bottom: 30px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 0 10px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      max-width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 15px;
+    }
+    .card-content h3 {
+      margin: 10px 0 5px;
+      font-size: 1.2em;
+    }
+    .card-content p.description {
+      font-size: 0.95em;
+      color: #666;
+      margin: 5px 0;
+    }
+    .tags {
+      margin: 8px 0;
+    }
+    .tags span {
+      background-color: #fff3e0;
+      color: #f57c00;
+      padding: 4px 8px;
+      border-radius: 12px;
+      margin-right: 5px;
+      font-size: 0.8em;
+    }
+    .price-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+    .price-section .price {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    .price-section .old-price {
+      text-decoration: line-through;
+      color: #888;
+      margin-left: 8px;
+    }
+    .weight {
+      font-size: 0.9em;
+      color: #555;
+    }
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .quantity-selector span {
+      padding: 0 12px;
+      font-weight: bold;
+    }
+    .quantity-selector button {
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .card-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .card-buttons button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .card-buttons .order-now {
+      background-color: #ffa000;
+      color: white;
+    }
+    .card-buttons .view-details {
+      background-color: #eeeeee;
+      color: #333;
+    }
+    .about-contact {
+      padding: 40px 20px;
+      background: #fffde7;
+    }
+    .about-contact h2, .about-contact p {
+      text-align: center;
+      color: #5d4037;
+    }
+    .contact-icons {
+      text-align: center;
+      font-size: 1.8em;
+      margin-top: 15px;
+    }
+    .cart {
+      background-color: #c8e6c9;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+    }
+    .cart p {
+      font-size: 1.2em;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+    .cart button {
+      margin: 10px 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .order {
+      background-color: #388e3c;
+      color: white;
+    }
+    .clear {
+      background-color: #bdbdbd;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      nav {
+        margin-top: 10px;
+        text-align: center;
+        width: 100%;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Millet Bites</h1>
+    <nav>
+      <a href="#hero">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact</a>
+      <a href="#reviews">Reviews</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="slideshow-container">
+      <img class="slides" src="b1.jpeg" alt="Combo 1">
+      <img class="slides" src="b2.jpeg" alt="Combo 2">
+      <img class="slides" src="b3.jpeg" alt="Combo 3">
+    </div>
+    <div class="slide-text">
+      <h2>Welcome to Millet Bites – Experience delicious flavour with our healthy, tasty, and affordable millet-based snacks!</h2>
+      <p>Healthy | Tasty | Affordable</p>
+    </div>
+  </section>
+    <section id="menu" class="menu">
+    <h2>Our Menu</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Ragi Mixture">
+        <div class="card-content">
+          <h3>Ragi Mixture</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi chegodilu.jpg" alt="Ragi Chegodilu">
+        <div class="card-content">
+          <h3>Ragi Chegodilu</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi murukkulu.jpg" alt="Ragi Murukkulu">
+        <div class="card-content">
+          <h3>Ragi Murukkulu</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Jowar Mixture">
+        <div class="card-content">
+          <h3>Jowar Mixture</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Jowar Murukkulu">
+        <div class="card-content">
+          <h3>Jowar Murukkulu</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Jowar Ribbon Pakodi">
+        <div class="card-content">
+          <h3>Jowar Ribbon Pakodi</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Foxtail Sev">
+        <div class="card-content">
+          <h3>Foxtail Sev</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Arikalu Jantikalu">
+        <div class="card-content">
+          <h3>Arikalu Jantikalu</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Samalu Boondi">
+        <div class="card-content">
+          <h3>Samalu Boondi</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Dry Fruit Mixture">
+        <div class="card-content">
+          <h3>Dry Fruit Mixture</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Dry Fruit Laddu">
+        <div class="card-content">
+          <h3>Dry Fruit Laddu</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Cashew Bar">
+        <div class="card-content">
+          <h3>Cashew Bar</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Panchadara Gavvalu">
+        <div class="card-content">
+          <h3>Panchadara Gavvalu</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Bellam Gavvalu">
+        <div class="card-content">
+          <h3>Bellam Gavvalu</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ragi-mixture.jpg" alt="Hot Gavvalu">
+        <div class="card-content">
+          <h3>Hot Gavvalu</h3>
+          <p class="description">Wholesome mixture crafted from calcium-rich ragi (finger millet).</p>
+          <div class="tags">
+            <span>High Calcium</span>
+            <span>Rich in Iron</span>
+          </div>
+          <div class="price-section">
+            <div>
+              <span class="price">₹500</span>
+              <span class="old-price">₹625</span>
+            </div>
+            <div class="weight">500g</div>
+          </div>
+          <div class="quantity-selector">
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </div>
+          <div class="card-buttons">
+            <button class="order-now">Order Now - ₹500</button>
+            <button class="view-details">View Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about-contact">
+    <h2>About Us</h2>
+    <p>We're a Vizag-based brand bringing healthy snacking to your doorstep.</p>
+  </section>
+
+  <section id="contact" class="about-contact" style="background: #e3f2fd">
+    <h2>Contact Us</h2>
+    <p>Reach us on:</p>
+    <div class="contact-icons">
+      💚 WhatsApp ✨ Instagram ☎️ Phone
+    </div>
+  </section>
+
+  <section class="cart">
+    <p>Total: ₹0</p>
+    <button class="order">Order on WhatsApp</button>
+    <button class="clear">Clear Cart</button>
+  </section>
+
+  <script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slides");
+
+    function showSlides() {
+      slides.forEach(slide => slide.style.display = "none");
+      slideIndex++;
+      if (slideIndex > slides.length) slideIndex = 1;
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 3000);
+    }
+
+    document.addEventListener("DOMContentLoaded", showSlides);
+  </script>
+</body>
+</html>
