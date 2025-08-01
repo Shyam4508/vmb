@@ -159,7 +159,8 @@
       font-size: 1.1em;
       font-weight: bold;
     }
-    .price-section .old-price {
+    .price-section
+    .old-price {
       text-decoration: line-through;
       color: #888;
       margin-left: 8px;
@@ -210,7 +211,8 @@
       padding: 40px 20px;
       background: #fffde7;
     }
-    .about-contact h2, .about-contact p {
+    .about-contact h2,
+    .about-contact p {
       text-align: center;
       color: #5d4037;
     }
@@ -274,6 +276,82 @@
       background-color: #eee;
       margin-top: 40px;
      }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: #fff;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      position: relative;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .product-card h4 {
+      margin: 8px 0 5px;
+      font-size: 1.1em;
+    }
+
+    .product-card p {
+      margin: 0;
+      font-size: 0.95em;
+      color: #2e7d32;
+      font-weight: bold;
+    }
+
+    .quantity-controls {
+      margin: 10px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .quantity-controls button {
+      padding: 5px 10px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #e0e0e0;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .quantity-controls select {
+      padding: 4px;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+
+    .cart-status {
+      margin-top: 6px;
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    .discount-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #00c853;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 12px;
+      z-index: 1;
+    }
 
   </style>
 </head>
@@ -301,339 +379,7 @@
   </section>
     <section id="menu" class="menu">
     <h2>Our Menu</h2>
-    <div class="grid">
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Ragi Mixture.jpeg" alt="Ragi Mixture">
-        <div class="card-content">
-          <h3>Ragi Mixture</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Ragi Chegodilu.jpeg" alt="Ragi Chegodilu">
-        <div class="card-content">
-          <h3>Ragi Chegodilu</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Ragi Murukkulu.jpeg" alt="Ragi Murukkulu">
-        <div class="card-content">
-          <h3>Ragi Murukkulu</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Jowar Mixture.jpeg" alt="Jowar Mixture">
-        <div class="card-content">
-          <h3>Jowar Mixture</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Jowar Murukkulu.jpeg" alt="Jowar Murukkulu">
-        <div class="card-content">
-          <h3>Jowar Murukkulu</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Jowar Ribbon Pakodi.jpeg" alt="Jowar Ribbon Pakodi">
-        <div class="card-content">
-          <h3>Jowar Ribbon Pakodi</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Foxtail Sev.jpeg" alt="Foxtail Sev">
-        <div class="card-content">
-          <h3>Foxtail Sev</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Arikalu Jantikalu.jpeg" alt="Arikalu Jantikalu">
-        <div class="card-content">
-          <h3>Arikalu Jantikalu</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Samalu Boondi.jpeg" alt="Samalu Boondi">
-        <div class="card-content">
-          <h3>Samalu Boondi</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Dry Fruit Mixture.jpeg" alt="Dry Fruit Mixture">
-        <div class="card-content">
-          <h3>Dry Fruit Mixture</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Dry Fruit Laddu.jpeg" alt="Dry Fruit Laddu">
-        <div class="card-content">
-          <h3>Dry Fruit Laddu</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Cashew Bar.jpeg" alt="Cashew Bar">
-        <div class="card-content">
-          <h3>Cashew Bar</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Panchadara Gavvalu.jpg" alt="Panchadara Gavvalu">
-        <div class="card-content">
-          <h3>Panchadara Gavvalu</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Bellam Gavvalu.jpeg" alt="Bellam Gavvalu">
-        <div class="card-content">
-          <h3>Bellam Gavvalu</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-        <div class="card" style="position: relative;">
-        <div class="discount-badge">20% OFF</div>
-        <img src="Hot Gavvalu.jpeg" alt="Hot Gavvalu">
-        <div class="card-content">
-          <h3>Hot Gavvalu</h3>
-          <div class="price-section">
-            <div>
-              <span class="price">₹500</span>
-              <span class="old-price">₹625</span>
-            </div>
-            <div class="weight">500g</div>
-          </div>
-          <div class="quantity-selector">
-            <button>-</button>
-            <span>0</span>
-            <button>+</button>
-          </div>
-          <div class="card-buttons">
-            <button class="order-now">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="product-grid" id="product-grid"></div>  </section>
 
   <section id="about" class="about-contact">
     <h2>About Us</h2>
@@ -680,6 +426,71 @@
     }
 
     document.addEventListener("DOMContentLoaded", showSlides);
+    const products = [
+      { name: "Ragi Mixture", image: "ragi_mixture.jpeg" },
+      { name: "Ragi Chegodilu", image: "ragi_chegodilu.jpeg" },
+      { name: "Ragi Murukkulu", image: "ragi_murukkulu.jpeg" },
+      { name: "Jonna Mixture", image: "jonna_mixture.jpeg" },
+      { name: "Jonna Murukkulu", image: "jonna_murukkulu.jpeg" },
+      { name: "Jowar Ribbon Pakodi", image: "Jowar Ribbon Pakodi.jpeg" },
+      { name: "Foxtail Sev", image: "Foxtail Sev.jpeg" },
+      { name: "Arikalu Jantikalu", image: "Arikalu Jantikalu.jpeg" },
+      { name: "Samalu Boondi", image: "Samalu Boondi.jpeg" },
+      { name: "Dry Fruit Mixture", image: "Dry Fruit Mixture.jpeg" },
+      { name: "Dry Fruit Laddu", image: "Dry Fruit Laddu.jpeg" },
+      { name: "Cashew Bar", image: "Cashew Bar.jpeg" },
+      { name: "Panchadara Gavvalu", image: "Panchadara Gavvalu.jpg" },
+      { name: "Bellam Gavvalu", image: "Bellam Gavvalu.jpeg" },
+      { name: "Hot Gavvalu", image: "Hot Gavvalu.jpeg" }
+    ];
+
+    const weights = [0.25, 0.5, 1, 2, 3];
+    const cart = {};
+
+    const grid = document.getElementById("product-grid");
+
+    products.forEach(product => {
+      const div = document.createElement("div");
+      div.className = "product-card";
+      div.innerHTML = `
+        <div class="discount-badge">20% OFF</div>
+        <img src="${product.image}" alt="${product.name}" />
+        <h4>${product.name}</h4>
+        <p>₹150 - 250g</p>
+        <div class="quantity-controls">
+          <button onclick="removeFromCart('${product.name}')">-</button>
+          <select id="select-${product.name}">
+            ${weights.map(w => `<option value="${w}">${w} KG</option>`).join('')}
+          </select>
+          <button onclick="addToCart('${product.name}')">+</button>
+        </div>
+        <div class="cart-status" id="status-${product.name}"></div>
+      `;
+      grid.appendChild(div);
+    });
+
+    function addToCart(product) {
+      const qty = parseFloat(document.getElementById(`select-${product}`).value);
+      cart[product] = (cart[product] || 0) + qty;
+      updateStatus(product);
+    }
+
+    function removeFromCart(product) {
+      const qty = parseFloat(document.getElementById(`select-${product}`).value);
+      if (!cart[product]) return;
+      cart[product] -= qty;
+      if (cart[product] <= 0) delete cart[product];
+      updateStatus(product);
+    }
+
+    function updateStatus(product) {
+      const status = document.getElementById(`status-${product}`);
+      if (cart[product]) {
+        status.textContent = `In cart: ${cart[product]} kg`;
+      } else {
+        status.textContent = "";
+      }
+    }
   </script>
 </body>
 </html>
