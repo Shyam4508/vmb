@@ -12,6 +12,23 @@
       color: #333;
       line-height: 1.6;
     }
+   .scroll {
+      background-color: #f1f8e9;
+      color: #2e7d32;
+      padding: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      box-shadow: inset 0 -1px 0 rgba(0,0,0,0.1);
+    }
+    .scroll span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll-left 25s linear infinite;
+    }
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
     header {
       background-color: #2e7d32;
       color: white;
@@ -239,8 +256,24 @@
         grid-template-columns: 1fr;
       }
     }
-   .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background-color: #25D366; color: white; border-radius: 50%; padding: 15px; font-size: 24px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); z-index: 1000; text-decoration: none; }
-    footer { text-align: center; padding: 10px; background-color: #eee; margin-top: 40px; }
+   .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 24px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 1000; text-decoration: none;
+     }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #eee;
+      margin-top: 40px;
+     }
 
   </style>
 </head>
@@ -248,19 +281,14 @@
   <header>
     <h1>Millet Bites</h1>
     <nav>
-      <a href="#hero">Home</a>
       <a href="#menu">Menu</a>
       <a href="#about">About Us</a>
       <a href="#contact">Contact</a>
       <a href="#reviews">Reviews</a>
     </nav>
   </header>
-
+  <div class="scroll"><span>🎉 Special Offer: Get 10% OFF on all orders above ₹500! Limited time only! 🎉</span></div>
   <section class="hero">
-    <marquee behavior="scroll" onmouseover="stop()" onmouseout="start()" direction="left" scrollamount="6">
-      🎉 Special Offer: Get 10% OFF on all orders above ₹500! Limited time only! 🎉
-  </br>
-    </marquee>
     <div class="slideshow-container">
       <img class="slides" src="b1.jpeg" alt="Combo 1">
       <img class="slides" src="b2.jpeg" alt="Combo 2">
