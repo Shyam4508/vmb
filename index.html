@@ -495,10 +495,7 @@
 .active-dot {
   background-color: #2e7d32;
 }
-.dots-container {
-  text-align: center;
-  margin-top: 10px;
-}
+
   </style>
 </head>
 <body>
@@ -596,77 +593,69 @@
   <a href="https://wa.me/919949840365" class="whatsapp-float" target="_blank">💬</a>
 
   <script>
-  let slideIndex = 0;
-  let slideTimer;
+let slideIndex = 1;
+let slideTimer;
 
-  function showSlides(index) {
-    const slides = document.querySelectorAll(".slides");
-    const dots = document.querySelectorAll(".dot");
+function showSlides(n) {
+  const slides = document.querySelectorAll(".slides");
+  const dots = document.querySelectorAll(".dot");
 
-    // Bounds check
-    if (index >= slides.length) slideIndex = 0;
-    if (index < 0) slideIndex = slides.length - 1;
-    else slideIndex = index;
+  if (n > slides.length) slideIndex = 1;
+  if (n < 1) slideIndex = slides.length;
 
-    // Reset all slides/dots
-    slides.forEach(slide => slide.style.display = "none");
-    dots.forEach(dot => dot.classList.remove("active-dot"));
+  slides.forEach(slide => (slide.style.display = "none"));
+  dots.forEach(dot => dot.classList.remove("active-dot"));
 
-    // Show current slide
-    slides[slideIndex].style.display = "block";
-    dots[slideIndex].classList.add("active-dot");
-  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].classList.add("active-dot");
+}
 
-  function nextSlide() {
-    showSlides(slideIndex + 1);
-  }
+function currentSlide(n) {
+  clearTimeout(slideTimer);
+  slideIndex = n;
+  showSlides(slideIndex);
+  autoSlides();
+}
 
-  function prevSlide() {
-    showSlides(slideIndex - 1);
-  }
+function plusSlides(n) {
+  clearTimeout(slideTimer);
+  slideIndex += n;
+  showSlides(slideIndex);
+  autoSlides();
+}
 
-  function currentSlide(n) {
-    clearTimeout(slideTimer);
-    showSlides(n);
-    autoSlides();
-  }
+function autoSlides() {
+  slideIndex++;
+  showSlides(slideIndex);
+  slideTimer = setTimeout(autoSlides, 6000);
+}
 
-  function autoSlides() {
-    clearTimeout(slideTimer);
-    slideTimer = setTimeout(() => {
-      nextSlide();
-      autoSlides();
-    }, 8000);
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  showSlides(slideIndex);
+  autoSlides();
 
-  function addTouchSwipe(container, onSwipeLeft, onSwipeRight) {
-    let startX = 0;
+  // Touch swipe logic
+  const slideshowContainer = document.querySelector(".slideshow-container");
+  let startX = 0;
 
-    container.addEventListener("touchstart", (e) => {
-      startX = e.touches[0].clientX;
-    });
+  slideshowContainer.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  });
 
-    container.addEventListener("touchend", (e) => {
-      const endX = e.changedTouches[0].clientX;
-      const diffX = startX - endX;
+  slideshowContainer.addEventListener("touchend", (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const diffX = startX - endX;
 
-      if (Math.abs(diffX) > 50) {
-        clearTimeout(slideTimer);
-        if (diffX > 0) onSwipeLeft();   // swipe left
-        else onSwipeRight();            // swipe right
-        autoSlides();
+    if (Math.abs(diffX) > 50) {
+      if (diffX > 0) {
+        plusSlides(1); // swipe left
+      } else {
+        plusSlides(-1); // swipe right
       }
-    });
-  }
+    }
+  });
+});
 
-  // ✅ Wait until everything (including images) is loaded
-  window.onload = function () {
-    showSlides(slideIndex);     // Show first slide
-    autoSlides();               // Start auto-play
-
-    const container = document.querySelector(".slideshow-container");
-    addTouchSwipe(container, nextSlide, prevSlide);
-  };
     const products = [
       { name: "Ragi Mixture", image: "Ragi Mixture.jpeg", price: 150 },
       { name: "Ragi Chegodilu", image: "Ragi Chegodilu.jpeg", price: 160 },
