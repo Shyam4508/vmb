@@ -593,21 +593,30 @@
   <a href="https://wa.me/919949840365" class="whatsapp-float" target="_blank">💬</a>
 
   <script>
-let slideIndex = 1;
+let slideIndex = 0;
 let slideTimer;
 
-function showSlides(n) {
+function showSlides(index) {
   const slides = document.querySelectorAll(".slides");
   const dots = document.querySelectorAll(".dot");
 
-  if (n > slides.length) slideIndex = 1;
-  if (n < 1) slideIndex = slides.length;
+  if (index >= slides.length) slideIndex = 0;
+  else if (index < 0) slideIndex = slides.length - 1;
+  else slideIndex = index;
 
-  slides.forEach(slide => (slide.style.display = "none"));
+  slides.forEach(slide => slide.style.display = "none");
   dots.forEach(dot => dot.classList.remove("active-dot"));
 
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].classList.add("active-dot");
+  slides[slideIndex].style.display = "block";
+  dots[slideIndex].classList.add("active-dot");
+}
+
+function nextSlide() {
+  showSlides(++slideIndex);
+}
+
+function prevSlide() {
+  showSlides(--slideIndex);
 }
 
 function currentSlide(n) {
@@ -617,43 +626,49 @@ function currentSlide(n) {
   autoSlides();
 }
 
-function plusSlides(n) {
-  clearTimeout(slideTimer);
-  slideIndex += n;
-  showSlides(slideIndex);
-  autoSlides();
-}
-
 function autoSlides() {
-  slideIndex++;
-  showSlides(slideIndex);
-  slideTimer = setTimeout(autoSlides, 6000);
+  slideTimer = setTimeout(() => {
+    nextSlide();
+    autoSlides();
+  }, 8000);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  showSlides(slideIndex);
-  autoSlides();
-
-  // Touch swipe logic
-  const slideshowContainer = document.querySelector(".slideshow-container");
+// ✅ Reusable touch swipe logic
+function addTouchSwipe(container, onSwipeLeft, onSwipeRight) {
   let startX = 0;
 
-  slideshowContainer.addEventListener("touchstart", (e) => {
+  container.addEventListener("touchstart", (e) => {
     startX = e.touches[0].clientX;
   });
 
-  slideshowContainer.addEventListener("touchend", (e) => {
+  container.addEventListener("touchend", (e) => {
     const endX = e.changedTouches[0].clientX;
     const diffX = startX - endX;
 
     if (Math.abs(diffX) > 50) {
+      clearTimeout(slideTimer); // pause auto on swipe
       if (diffX > 0) {
-        plusSlides(1); // swipe left
+        onSwipeLeft(); // swipe left → next
       } else {
-        plusSlides(-1); // swipe right
+        onSwipeRight(); // swipe right → previous
       }
+      autoSlides(); // resume auto
     }
   });
+}
+
+// ✅ Initialize on load
+document.addEventListener("DOMContentLoaded", () => {
+  showSlides(slideIndex);
+  autoSlides();
+
+  const slideshowContainer = document.querySelector(".slideshow-container");
+
+  addTouchSwipe(
+    slideshowContainer,
+    () => nextSlide(),
+    () => prevSlide()
+  );
 });
 
     const products = [
