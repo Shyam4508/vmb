@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -481,19 +482,6 @@
     .overlay.active {
       display: block;
     }
-    .dot {
-  height: 5px;
-  width: 5px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
-}
-    .active {
-  background-color: #717171;
-}
-  * {box-sizing: border-box;}
   </style>
 </head>
 <body>
@@ -539,12 +527,6 @@
       <img class="slides" src="b2.jpeg" alt="Combo 3">
       <img class="slides" src="b3.jpeg" alt="Combo 4">
     </div>
-    <div style="text-align:center">
-      <span class="dot"></span> 
-      <span class="dot"></span>
-      <span class="dot"></span> 
-      <span class="dot"></span> 
-    </div>
     <div class="slide-text">
       <h4>Welcome to Millet Bites – Experience delicious flavour with our healthy, tasty, and affordable millet-based snacks!</h4>
       <p>Healthy | Tasty | Affordable</p>
@@ -556,12 +538,12 @@
     <div class="product-grid" id="product-grid"></div>
   </section>
 
-  <section class="about">
+  <section id="about" class="about-contact">
     <h2>About Us</h2>
     <p>We're a Vizag-based brand bringing healthy snacking to your doorstep.</p>
   </section>
 
-  <section class="contact" style="background: #e3f2fd">
+  <section id="contact" class="about-contact" style="background: #e3f2fd">
     <h2>Contact Us</h2>
     <p>Reach us on:</p>
     <div class="contact-icons">
@@ -579,7 +561,7 @@
     </div>
   </section>
 
-  <section class="reviews" style="background: #fff8e1">
+  <section id="reviews" class="about-contact" style="background: #fff8e1">
     <h2>Customer Reviews</h2>
     <p>“Absolutely loved the Ragi Mixture—crunchy and wholesome!”</p>
     <p>“Fast delivery, fresh taste. Will order again.”</p>
@@ -599,16 +581,9 @@
       slideIndex++;
       if (slideIndex > slides.length) slideIndex = 1;
       if (slides[slideIndex - 1]) slides[slideIndex - 1].style.display = "block";
-      setTimeout(showSlides, 6000);
-      if (slideIndex > slides.length) {slideIndex = 1}    
-      for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-      }
-      slides[slideIndex-1].style.display = "block";  
-      dots[slideIndex-1].className += " active";
-      setTimeout(showSlides, 6000);
-      }
-    
+      setTimeout(showSlides, 8000);
+    }
+
     const products = [
       { name: "Ragi Mixture", image: "Ragi Mixture.jpeg", price: 150 },
       { name: "Ragi Chegodilu", image: "Ragi Chegodilu.jpeg", price: 160 },
