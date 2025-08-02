@@ -12,7 +12,7 @@
       color: #333;
       line-height: 1.6;
     }
-   .scroll {
+    .scroll {
       background-color: #f1f8e9;
       color: #2e7d32;
       padding: 10px;
@@ -53,17 +53,18 @@
     nav a:hover {
       color: #c8e6c9;
     }
-   .discount-badge {
-     position: absolute;
-     top: 10px;
-     right: 10px;
-     background-color: #00c853;
-     color: white;
-     padding: 4px 10px;
-     font-size: 14px;
-     font-weight: bold;
-     border-radius: 20px;
-     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    .discount-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #00c853;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 12px;
+      z-index: 1;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
     .hero {
       text-align: center;
@@ -159,8 +160,7 @@
       font-size: 1.1em;
       font-weight: bold;
     }
-    .price-section
-    .old-price {
+    .price-section .old-price {
       text-decoration: line-through;
       color: #888;
       margin-left: 8px;
@@ -185,6 +185,10 @@
       height: 30px;
       font-size: 16px;
       cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .quantity-selector button:hover {
+      transform: scale(1.05);
     }
     .card-buttons {
       display: flex;
@@ -226,6 +230,9 @@
       padding: 20px;
       text-align: center;
       box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
     }
     .cart p {
       font-size: 1.2em;
@@ -239,6 +246,10 @@
       border-radius: 25px;
       font-weight: bold;
       cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .cart button:hover {
+      transform: scale(1.05);
     }
     .order {
       background-color: #388e3c;
@@ -258,7 +269,7 @@
         grid-template-columns: 1fr;
       }
     }
-   .whatsapp-float {
+    .whatsapp-float {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -268,20 +279,20 @@
       padding: 15px;
       font-size: 24px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      z-index: 1000; text-decoration: none;
-     }
+      z-index: 1000;
+      text-decoration: none;
+    }
     footer {
       text-align: center;
       padding: 10px;
       background-color: #eee;
       margin-top: 40px;
-     }
+    }
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
     }
-
     .product-card {
       background: #fff;
       padding: 12px;
@@ -291,26 +302,22 @@
       transition: transform 0.2s;
       position: relative;
     }
-
     .product-card img {
       width: 100%;
       height: 140px;
       object-fit: cover;
       border-radius: 6px;
     }
-
     .product-card h4 {
       margin: 8px 0 5px;
       font-size: 1.1em;
     }
-
     .product-card p {
       margin: 0;
       font-size: 0.95em;
       color: #2e7d32;
       font-weight: bold;
     }
-
     .quantity-controls {
       margin: 10px 0;
       display: flex;
@@ -318,7 +325,6 @@
       align-items: center;
       gap: 8px;
     }
-
     .quantity-controls button {
       padding: 5px 10px;
       font-size: 14px;
@@ -326,33 +332,21 @@
       background: #e0e0e0;
       border: none;
       border-radius: 4px;
+      transition: background 0.2s ease, transform 0.15s ease;
     }
-
+    .quantity-controls button:hover {
+      transform: scale(1.05);
+    }
     .quantity-controls select {
       padding: 4px;
       font-size: 14px;
       border-radius: 4px;
     }
-
     .cart-status {
       margin-top: 6px;
       font-size: 0.9em;
       color: #555;
     }
-
-    .discount-badge {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: #00c853;
-      color: #fff;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 4px 8px;
-      border-radius: 12px;
-      z-index: 1;
-    }
-
   </style>
 </head>
 <body>
@@ -377,9 +371,11 @@
       <p>Healthy | Tasty | Affordable</p>
     </div>
   </section>
-    <section id="menu" class="menu">
+
+  <section id="menu" class="menu">
     <h2>Our Menu</h2>
-  <div class="product-grid" id="product-grid"></div>  </section>
+    <div class="product-grid" id="product-grid"></div>
+  </section>
 
   <section id="about" class="about-contact">
     <h2>About Us</h2>
@@ -390,24 +386,32 @@
     <h2>Contact Us</h2>
     <p>Reach us on:</p>
     <div class="contact-icons">
-         <div style="display: flex; justify-content: center; gap: 20px;">
-      <a href="https://wa.me/919949840365" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" style="height: 30px; width: 30px;">
-      </a>
-      <a href="https://instagram.com/vizagMilletBites" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" style="height: 30px; width: 30px;">
-      </a>
-      <a href="tel:+919949840365" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/724/724664.png" alt="Phone" style="height: 30px; width: 30px;">
-      </a>
+      <div style="display: flex; justify-content: center; gap: 20px;">
+        <a href="https://wa.me/919949840365" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" style="height: 30px; width: 30px;">
+        </a>
+        <a href="https://instagram.com/vizagMilletBites" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" style="height: 30px; width: 30px;">
+        </a>
+        <a href="tel:+919949840365" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/724/724664.png" alt="Phone" style="height: 30px; width: 30px;">
+        </a>
+      </div>
     </div>
   </section>
 
+  <section id="reviews" class="about-contact" style="background: #fff8e1">
+    <h2>Customer Reviews</h2>
+    <p>“Absolutely loved the Ragi Mixture—crunchy and wholesome!”</p>
+    <p>“Fast delivery, fresh taste. Will order again.”</p>
+  </section>
+
   <section class="cart">
-    <p>Total: ₹0</p>
+    <p>Total: ₹0.00</p>
     <button class="order">Order on WhatsApp</button>
     <button class="clear">Clear Cart</button>
   </section>
+
   <footer>
     &copy; 2025 Millet Bites. All rights reserved.
   </footer>
@@ -415,82 +419,122 @@
 
   <script>
     let slideIndex = 0;
-    const slides = document.querySelectorAll(".slides");
 
     function showSlides() {
+      const slides = document.querySelectorAll(".slides");
       slides.forEach(slide => slide.style.display = "none");
       slideIndex++;
       if (slideIndex > slides.length) slideIndex = 1;
-      slides[slideIndex - 1].style.display = "block";
+      if (slides[slideIndex - 1]) slides[slideIndex - 1].style.display = "block";
       setTimeout(showSlides, 3000);
     }
 
-    document.addEventListener("DOMContentLoaded", showSlides);
     const products = [
-      { name: "Ragi Mixture", image: "Ragi Mixture.jpeg" },
-      { name: "Ragi Chegodilu", image: "Ragi Chegodilu.jpeg" },
-      { name: "Ragi Murukkulu", image: "Ragi Murukkulu.jpeg" },
-      { name: "Jowar Mixture", image: "Jowar Mixture.jpeg" },
-      { name: "Jowar Murukkulu", image: "Jowar Murukkulu.jpeg" },
-      { name: "Jowar Ribbon Pakodi", image: "Jowar Ribbon Pakodi.jpeg" },
-      { name: "Foxtail Sev", image: "Foxtail Sev.jpeg" },
-      { name: "Arikalu Jantikalu", image: "Arikalu Jantikalu.jpeg" },
-      { name: "Samalu Boondi", image: "Samalu Boondi.jpeg" },
-      { name: "Dry Fruit Mixture", image: "Dry Fruit Mixture.jpeg" },
-      { name: "Dry Fruit Laddu", image: "Dry Fruit Laddu.jpeg" },
-      { name: "Cashew Bar", image: "Cashew Bar.jpeg" },
-      { name: "Panchadara Gavvalu", image: "Panchadara Gavvalu.jpg" },
-      { name: "Bellam Gavvalu", image: "Bellam Gavvalu.jpeg" },
-      { name: "Hot Gavvalu", image: "Hot Gavvalu.jpeg" }
+      { name: "Ragi Mixture", image: "Ragi Mixture.jpeg", price: 150 },
+      { name: "Ragi Chegodilu", image: "Ragi Chegodilu.jpeg", price: 160 },
+      { name: "Ragi Murukkulu", image: "Ragi Murukkulu.jpeg", price: 170 },
+      { name: "Jowar Mixture", image: "Jowar Mixture.jpeg", price: 150 },
+      { name: "Jowar Murukkulu", image: "Jowar Murukkulu.jpeg", price: 150 },
+      { name: "Jowar Ribbon Pakodi", image: "Jowar Ribbon Pakodi.jpeg", price: 160 },
+      { name: "Foxtail Sev", image: "Foxtail Sev.jpeg", price: 180 },
+      { name: "Arikalu Jantikalu", image: "Arikalu Jantikalu.jpeg", price: 150 },
+      { name: "Samalu Boondi", image: "Samalu Boondi.jpeg", price: 140 },
+      { name: "Dry Fruit Mixture", image: "Dry Fruit Mixture.jpeg", price: 250 },
+      { name: "Dry Fruit Laddu", image: "Dry Fruit Laddu.jpeg", price: 300 },
+      { name: "Cashew Bar", image: "Cashew Bar.jpeg", price: 200 },
+      { name: "Panchadara Gavvalu", image: "Panchadara Gavvalu.jpg", price: 150 },
+      { name: "Bellam Gavvalu", image: "Bellam Gavvalu.jpeg", price: 160 },
+      { name: "Hot Gavvalu", image: "Hot Gavvalu.jpeg", price: 160 }
     ];
 
     const weights = [0.25, 0.5, 1, 2, 3];
     const cart = {};
 
-    const grid = document.getElementById("product-grid");
-
-    products.forEach(product => {
-      const div = document.createElement("div");
-      div.className = "product-card";
-      div.innerHTML = `
-        <div class="discount-badge">20% OFF</div>
-        <img src="${product.image}" alt="${product.name}" />
-        <h4>${product.name}</h4>
-        <p>₹150 - 250g</p>
-        <div class="quantity-controls">
-          <button onclick="removeFromCart('${product.name}')">-</button>
-          <select id="select-${product.name}">
-            ${weights.map(w => `<option value="${w}">${w} KG</option>`).join('')}
-          </select>
-          <button onclick="addToCart('${product.name}')">+</button>
-        </div>
-        <div class="cart-status" id="status-${product.name}"></div>
-      `;
-      grid.appendChild(div);
-    });
-
-    function addToCart(product) {
-      const qty = parseFloat(document.getElementById(`select-${product}`).value);
-      cart[product] = (cart[product] || 0) + qty;
-      updateStatus(product);
+    function renderProducts() {
+      const grid = document.getElementById("product-grid");
+      products.forEach(product => {
+        const div = document.createElement("div");
+        div.className = "product-card";
+        div.innerHTML = `
+          <div class="discount-badge">20% OFF</div>
+          <img src="${product.image}" alt="${product.name}" />
+          <h4>${product.name}</h4>
+          <p>₹${product.price} / 250g</p>
+          <div class="quantity-controls">
+            <button onclick="removeFromCart('${product.name}')">-</button>
+            <select id="select-${product.name}">
+              ${weights.map(w => `<option value="${w}">${w} KG</option>`).join('')}
+            </select>
+            <button onclick="addToCart('${product.name}')">+</button>
+          </div>
+          <div class="cart-status" id="status-${product.name}"></div>
+        `;
+        grid.appendChild(div);
+      });
     }
 
-    function removeFromCart(product) {
-      const qty = parseFloat(document.getElementById(`select-${product}`).value);
-      if (!cart[product]) return;
-      cart[product] -= qty;
-      if (cart[product] <= 0) delete cart[product];
-      updateStatus(product);
+    function addToCart(productName) {
+      const qty = parseFloat(document.getElementById(`select-${productName}`).value);
+      if (!cart[productName]) {
+        const product = products.find(p => p.name === productName);
+        cart[productName] = { qty: 0, price: product.price };
+      }
+      cart[productName].qty += qty;
+      updateStatus(productName);
+      updateCartTotal();
     }
 
-    function updateStatus(product) {
-      const status = document.getElementById(`status-${product}`);
-      if (cart[product]) {
-        status.textContent = `In cart: ${cart[product]} kg`;
+    function removeFromCart(productName) {
+      const qty = parseFloat(document.getElementById(`select-${productName}`).value);
+      if (!cart[productName]) return;
+      cart[productName].qty -= qty;
+      if (cart[productName].qty <= 0) delete cart[productName];
+      updateStatus(productName);
+      updateCartTotal();
+    }
+
+    function updateStatus(productName) {
+      const status = document.getElementById(`status-${productName}`);
+      if (cart[productName]) {
+        status.textContent = `In cart: ${cart[productName].qty.toFixed(2)} kg`;
       } else {
         status.textContent = "";
       }
     }
+
+    function updateCartTotal() {
+      let total = 0;
+      for (const item in cart) {
+        // product.price is per 250g, so per kg multiply by 4
+        total += cart[item].qty * cart[item].price * 4;
+      }
+      document.querySelector(".cart p").textContent = `Total: ₹${total.toFixed(2)}`;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      showSlides();
+      renderProducts();
+      // Attach button handlers now that DOM exists
+      document.querySelector(".clear").addEventListener("click", () => {
+        for (const item in cart) {
+          delete cart[item];
+          updateStatus(item);
+        }
+        updateCartTotal();
+      });
+      document.querySelector(".order").addEventListener("click", () => {
+        if (Object.keys(cart).length === 0) {
+          alert("Your cart is empty!");
+          return;
+        }
+        let msg = `Hello! I'd like to order:\n`;
+        for (const item in cart) {
+          msg += `${item}: ${cart[item].qty.toFixed(2)} kg\n`;
+        }
+        const encodedMsg = encodeURIComponent(msg);
+        window.open(`https://wa.me/919949840365?text=${encodedMsg}`, "_blank");
+      });
+    });
   </script>
 </body>
 </html>
