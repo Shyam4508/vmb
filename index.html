@@ -592,7 +592,7 @@
   </footer>
   <a href="https://wa.me/919949840365" class="whatsapp-float" target="_blank">💬</a>
 
-  <script>
+<script>
   let slideIndex = 0;
   let slideTimer;
 
@@ -602,14 +602,13 @@
 
     if (slides.length === 0) return;
 
-    // Loop index correctly
-    slideIndex = (index + slides.length) % slides.length;
+    if (index >= slides.length) slideIndex = 0;
+    if (index < 0) slideIndex = slides.length - 1;
+    else slideIndex = index;
 
-    // Reset display
-    slides.forEach(slide => (slide.style.display = "none"));
+    slides.forEach(slide => slide.style.display = "none");
     dots.forEach(dot => dot.classList.remove("active-dot"));
 
-    // Show current slide
     slides[slideIndex].style.display = "block";
     dots[slideIndex].classList.add("active-dot");
   }
@@ -632,7 +631,7 @@
     clearTimeout(slideTimer);
     slideTimer = setTimeout(() => {
       nextSlide();
-      autoSlides(); // call recursively
+      autoSlides();
     }, 8000);
   }
 
@@ -655,6 +654,24 @@
       }
     });
   }
+
+  // ✅ Show first slide immediately on load
+  window.onload = function () {
+    const slides = document.querySelectorAll(".slides");
+    const dots = document.querySelectorAll(".dot");
+
+    if (slides.length === 0) return;
+
+    // Hide all slides first
+    slides.forEach(slide => slide.style.display = "none");
+    slides[0].style.display = "block"; // Show first image
+    dots[0].classList.add("active-dot");
+
+    autoSlides();
+
+    const container = document.querySelector(".slideshow-container");
+    addTouchSwipe(container, nextSlide, prevSlide);
+  };
 
   window.onload = function () {
     showSlides(slideIndex);        // Show first slide
