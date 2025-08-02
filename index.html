@@ -481,9 +481,37 @@
     .overlay.active {
       display: block;
     }
-     * {box-sizing: border-box;}
-body {font-family: Verdana, sans-serif;}
-    .dot {
+    .mySlides {display: none;}
+    img {vertical-align: middle;}
+    * {box-sizing: border-box;}
+    body {font-family: Verdana, sans-serif;}
+    /* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+ .dot {
   height: 5px;
   width: 5px;
   margin: 0 2px;
@@ -492,8 +520,11 @@ body {font-family: Verdana, sans-serif;}
   display: inline-block;
   transition: background-color 0.6s ease;
 }
-    .active {
+    .active, .dot:hover {
   background-color: #717171;
+}
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
 }
   </style>
 </head>
@@ -535,10 +566,20 @@ body {font-family: Verdana, sans-serif;}
   <div class="scroll"><span>🎉 Special Offer: Get 10% OFF on all orders above ₹500! Limited time only! 🎉</span></div>
   <section class="hero">
     <div class="slideshow-container">
+      <div class="mySlides fade">
       <img class="slides" src="b4.jpeg" alt="Combo 1">
+      </div>
+      <div class="mySlides fade">
       <img class="slides" src="b1.jpeg" alt="Combo 2">
+      </div>
+      <div class="mySlides fade">
       <img class="slides" src="b2.jpeg" alt="Combo 3">
+      </div>
+      <div class="mySlides fade">
       <img class="slides" src="b3.jpeg" alt="Combo 4">
+      </div>
+      <a class="prev" onclick="plusSlides(-1)">❮</a>
+      <a class="next" onclick="plusSlides(1)">❯</a>
     </div>
     <div style="text-align:center">
       <span class="dot"></span> 
@@ -593,16 +634,32 @@ body {font-family: Verdana, sans-serif;}
   <a href="https://wa.me/919949840365" class="whatsapp-float" target="_blank">💬</a>
 
   <script>
-    let slideIndex = 0;
+   let slideIndex = 1;
+showSlides(slideIndex);
 
-    function showSlides() {
-      const slides = document.querySelectorAll(".slides");
-      slides.forEach(slide => slide.style.display = "none");
-      slideIndex++;
-      if (slideIndex > slides.length) slideIndex = 1;
-      if (slides[slideIndex - 1]) slides[slideIndex - 1].style.display = "block";
-      setTimeout(showSlides, 8000);
-    }
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
 
     const products = [
       { name: "Ragi Mixture", image: "Ragi Mixture.jpeg", price: 150 },
