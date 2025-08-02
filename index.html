@@ -109,7 +109,7 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 2fr));
       gap: 20px;
       padding: 0 10px;
     }
@@ -218,8 +218,7 @@
       padding: 40px 20px;
       background: #fffde7;
     }
-    .about-contact h2,
-    .about-contact p {
+    .about-contact h2,.about-contact p {
       text-align: center;
       color: #5d4037;
     }
@@ -500,13 +499,11 @@
   border-radius: 0 3px 3px 0;
   user-select: none;
 }
-
 /* Position the "next button" to the right */
 .next {
   right: 0;
   border-radius: 3px 0 0 3px;
 }
-
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
@@ -530,7 +527,6 @@
   animation-name: fade;
   animation-duration: 1.5s;
 }
-
 @keyframes fade {
   from {opacity: .4} 
   to {opacity: 1}
