@@ -593,15 +593,15 @@
   <a href="https://wa.me/919949840365" class="whatsapp-float" target="_blank">💬</a>
 
   <script>
-let slideIndex = 0;
+let slideIndex = 1;
 let slideTimer;
 
 function showSlides(n) {
   const slides = document.querySelectorAll(".slides");
   const dots = document.querySelectorAll(".dot");
 
-  if (n > slides.length) slideIndex = 0;
-  if (n < 0) slideIndex = slides.length;
+  if (n > slides.length) slideIndex = 1;
+  if (n < 1) slideIndex = slides.length;
 
   slides.forEach(slide => (slide.style.display = "none"));
   dots.forEach(dot => dot.classList.remove("active-dot"));
@@ -631,8 +631,6 @@ function autoSlides() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const slides = document.querySelectorAll(".slides");
-  slideIndex = 0;
   showSlides(slideIndex);
   autoSlides();
 
