@@ -598,6 +598,9 @@
       slides.forEach(slide => slide.style.display = "none");
       slideIndex++;
       if (slideIndex > slides.length) slideIndex = 1;
+      if (slides[slideIndex - 1]) slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 6000);
+      if (slideIndex > slides.length) {slideIndex = 1}    
       for (i = 0; i < dots.length; i++) {
       dots[i].className = dots[i].className.replace(" active", "");
       }
