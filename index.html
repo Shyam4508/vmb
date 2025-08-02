@@ -602,13 +602,14 @@
 
     if (slides.length === 0) return;
 
-    if (index >= slides.length) slideIndex = 0;
-    if (index < 0) slideIndex = slides.length - 1;
-    else slideIndex = index;
+    // Loop index correctly
+    slideIndex = (index + slides.length) % slides.length;
 
-    slides.forEach(slide => slide.style.display = "none");
+    // Reset display
+    slides.forEach(slide => (slide.style.display = "none"));
     dots.forEach(dot => dot.classList.remove("active-dot"));
 
+    // Show current slide
     slides[slideIndex].style.display = "block";
     dots[slideIndex].classList.add("active-dot");
   }
@@ -631,7 +632,7 @@
     clearTimeout(slideTimer);
     slideTimer = setTimeout(() => {
       nextSlide();
-      autoSlides();
+      autoSlides(); // call recursively
     }, 8000);
   }
 
@@ -655,6 +656,13 @@
     });
   }
 
+  window.onload = function () {
+    showSlides(slideIndex);        // Show first slide
+    autoSlides();                  // Start rotating
+
+    const container = document.querySelector(".slideshow-container");
+    addTouchSwipe(container, nextSlide, prevSlide);
+  };
   // ✅ Show first slide immediately on load
   window.onload = function () {
     const slides = document.querySelectorAll(".slides");
