@@ -601,13 +601,13 @@ function showSlides(n) {
   const dots = document.querySelectorAll(".dot");
 
   if (n > slides.length) slideIndex = 0;
-  if (n < 0) slideIndex = slides.length-1;
+  if (n < 0) slideIndex = slides.length;
 
   slides.forEach(slide => (slide.style.display = "none"));
   dots.forEach(dot => dot.classList.remove("active-dot"));
 
-  slides[slideIndex].style.display = "block";
-  dots[slideIndex].classList.add("active-dot");
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].classList.add("active-dot");
 }
 
 function currentSlide(n) {
@@ -631,6 +631,8 @@ function autoSlides() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const slides = document.querySelectorAll(".slides");
+  slideIndex = 0;
   showSlides(slideIndex);
   autoSlides();
 
