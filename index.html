@@ -38,6 +38,9 @@
       padding: 15px 25px;
       flex-wrap: wrap;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     header h1 {
       margin: 0;
@@ -68,7 +71,7 @@
     }
     .hero {
       text-align: center;
-      padding: 40px 20px;
+      padding: 10px 20px;
       background: #e8f5e9;
     }
     .slideshow-container {
@@ -228,19 +231,72 @@
     .cart {
       background-color: #c8e6c9;
       padding: 20px;
-      text-align: center;
       box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
       position: sticky;
       bottom: 0;
       z-index: 10;
+      display: none;
     }
-    .cart p {
-      font-size: 1.2em;
+    .cart-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 15px;
+    }
+    .cart-summary p {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin: 0;
+    }
+    .cart-items {
+      max-height: 200px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+      border-top: 1px solid #a5d6a7;
+      border-bottom: 1px solid #a5d6a7;
+      padding: 10px 0;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    .cart-item-name {
+      flex: 2;
+      font-weight: 500;
+    }
+    .cart-item-qty {
+      flex: 1;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .cart-item-qty button {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      width: 25px;
+      height: 25px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .cart-item-price {
+      flex: 1;
+      text-align: right;
       font-weight: bold;
     }
+    .cart-buttons {
+      display: flex;
+      gap: 10px;
+    }
     .cart button {
-      margin: 10px 15px;
       padding: 10px 20px;
       border: none;
       border-radius: 25px;
@@ -267,6 +323,12 @@
       }
       .grid {
         grid-template-columns: 1fr;
+      }
+      .cart-buttons {
+        flex-direction: column;
+      }
+      .cart button {
+        width: 100%;
       }
     }
     .whatsapp-float {
@@ -347,17 +409,113 @@
       font-size: 0.9em;
       color: #555;
     }
+    .empty-cart {
+      text-align: center;
+      color: #666;
+      padding: 20px;
+    }
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      margin-left: 20px;
+    }
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #ff5722;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+    .cart-panel {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 350px;
+      height: 100%;
+      background: white;
+      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+      transition: right 0.3s ease;
+      z-index: 1100;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .cart-panel.active {
+      right: 0;
+    }
+    .cart-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      display: none;
+    }
+    .overlay.active {
+      display: block;
+    }
   </style>
 </head>
 <body>
+  <div class="overlay" id="overlay"></div>
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-panel-header">
+      <h3>Your Cart</h3>
+      <button class="close-cart" id="closeCart">&times;</button>
+    </div>
+    <div class="cart-items" id="panel-cart-items">
+      <div class="empty-cart">Your cart is empty</div>
+    </div>
+    <div class="cart-summary">
+      <p>Total: ₹0.00</p>
+    </div>
+    <div class="cart-buttons">
+      <button class="order">Order on WhatsApp</button>
+      <button class="clear">Clear Cart</button>
+    </div>
+  </div>
+
   <header>
     <h1>Millet Bites</h1>
-    <nav>
-      <a href="#menu">Menu</a>
-      <a href="#about">About Us</a>
-      <a href="#contact">Contact</a>
-      <a href="#reviews">Reviews</a>
-    </nav>
+    <div class="header-right">
+      <nav>
+        <a href="#menu">Menu</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+        <a href="#reviews">Reviews</a>
+      </nav>
+      <div class="cart-icon" id="cartIcon">
+        🛒
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+    </div>
   </header>
   <div class="scroll"><span>🎉 Special Offer: Get 10% OFF on all orders above ₹500! Limited time only! 🎉</span></div>
   <section class="hero">
@@ -387,7 +545,7 @@
     <p>Reach us on:</p>
     <div class="contact-icons">
       <div style="display: flex; justify-content: center; gap: 20px;">
-        <a href="https://wa.me/919949840365" target="_blank">
+        <a href="https://wa.me/919949840365text=Hi! I want millet snacks" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" style="height: 30px; width: 30px;">
         </a>
         <a href="https://instagram.com/vizagMilletBites" target="_blank">
@@ -406,16 +564,10 @@
     <p>“Fast delivery, fresh taste. Will order again.”</p>
   </section>
 
-  <section class="cart">
-    <p>Total: ₹0.00</p>
-    <button class="order">Order on WhatsApp</button>
-    <button class="clear">Clear Cart</button>
-  </section>
-
   <footer>
     &copy; 2025 Millet Bites. All rights reserved.
   </footer>
-  <a href="https://wa.me/919949840365" class="whatsapp-float" target="_blank">💬</a>
+  <a href="https://wa.me/919949840365text=Hi! I want millet snacks" class="whatsapp-float" target="_blank">💬</a>
 
   <script>
     let slideIndex = 0;
@@ -481,7 +633,8 @@
       }
       cart[productName].qty += qty;
       updateStatus(productName);
-      updateCartTotal();
+      updateCartDisplay();
+      updateCartCount();
     }
 
     function removeFromCart(productName) {
@@ -490,7 +643,8 @@
       cart[productName].qty -= qty;
       if (cart[productName].qty <= 0) delete cart[productName];
       updateStatus(productName);
-      updateCartTotal();
+      updateCartDisplay();
+      updateCartCount();
     }
 
     function updateStatus(productName) {
@@ -502,38 +656,105 @@
       }
     }
 
-    function updateCartTotal() {
+    function updateCartCount() {
+      const count = Object.keys(cart).length;
+      document.getElementById("cartCount").textContent = count;
+    }
+
+    function updateCartDisplay() {
+      const cartItemsContainer = document.getElementById("panel-cart-items");
       let total = 0;
+      
+      if (Object.keys(cart).length === 0) {
+        cartItemsContainer.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+        document.querySelector(".cart-summary p").textContent = `Total: ₹0.00`;
+        return;
+      }
+      
+      let cartItemsHTML = '';
       for (const item in cart) {
         // product.price is per 250g, so per kg multiply by 4
+        const itemTotal = cart[item].qty * cart[item].price * 4;
+        total += itemTotal;
+        
+        cartItemsHTML += `
+          <div class="cart-item">
+            <div class="cart-item-name">${item}</div>
+            <div class="cart-item-qty">
+              <button onclick="adjustCartItem('${item}', -0.25)">-</button>
+              ${cart[item].qty.toFixed(2)} kg
+              <button onclick="adjustCartItem('${item}', 0.25)">+</button>
+            </div>
+            <div class="cart-item-price">₹${itemTotal.toFixed(2)}</div>
+          </div>
+        `;
+      }
+      
+      cartItemsContainer.innerHTML = cartItemsHTML;
+      document.querySelector(".cart-summary p").textContent = `Total: ₹${total.toFixed(2)}`;
+    }
+
+    function adjustCartItem(productName, adjustment) {
+      if (!cart[productName]) return;
+      
+      cart[productName].qty += adjustment;
+      
+      if (cart[productName].qty <= 0) {
+        delete cart[productName];
+      }
+      
+      updateStatus(productName);
+      updateCartDisplay();
+      updateCartCount();
+    }
+
+    function toggleCartPanel() {
+      document.getElementById("cartPanel").classList.toggle("active");
+      document.getElementById("overlay").classList.toggle("active");
+    }
+
+    function sendOrder() {
+      if (Object.keys(cart).length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      let msg = "Hello! I'd like to order:\n";
+      for (const item in cart) {
+        msg += `${item}: ${cart[item].qty.toFixed(2)} kg\n`;
+      }
+      
+      // Calculate total
+      let total = 0;
+      for (const item in cart) {
         total += cart[item].qty * cart[item].price * 4;
       }
-      document.querySelector(".cart p").textContent = `Total: ₹${total.toFixed(2)}`;
+      msg += `\nTotal: ₹${total.toFixed(2)}\n\nPlease confirm my order.`;
+      
+      const encodedMsg = encodeURIComponent(msg);
+      window.open(`https://wa.me/919949840365?text=${encodedMsg}`, "_blank");
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       showSlides();
       renderProducts();
-      // Attach button handlers now that DOM exists
+      
+      // Cart panel toggle
+      document.getElementById("cartIcon").addEventListener("click", toggleCartPanel);
+      document.getElementById("closeCart").addEventListener("click", toggleCartPanel);
+      document.getElementById("overlay").addEventListener("click", toggleCartPanel);
+      
+      // Clear cart button
       document.querySelector(".clear").addEventListener("click", () => {
         for (const item in cart) {
           delete cart[item];
           updateStatus(item);
         }
-        updateCartTotal();
+        updateCartDisplay();
+        updateCartCount();
       });
-      document.querySelector(".order").addEventListener("click", () => {
-        if (Object.keys(cart).length === 0) {
-          alert("Your cart is empty!");
-          return;
-        }
-        let msg = `Hello! I'd like to order:\n`;
-        for (const item in cart) {
-          msg += `${item}: ${cart[item].qty.toFixed(2)} kg\n`;
-        }
-        const encodedMsg = encodeURIComponent(msg);
-        window.open(`https://wa.me/919949840365?text=${encodedMsg}`, "_blank");
-      });
+      
+      // Order button
+      document.querySelector(".order").addEventListener("click", sendOrder);
     });
   </script>
 </body>
