@@ -624,7 +624,7 @@ function nextSlide() {
   if (slideIndex > document.querySelectorAll(".slides").length) {
     slideIndex = 1;
   }
-  slideIndex++;
+  else{slideIndex++;}
   showSlides(slideIndex);
 }
 
@@ -632,7 +632,7 @@ function prevSlide() {
   if (slideIndex < 1) {
     slideIndex = document.querySelectorAll(".slides").length;
   }
-  slideIndex--;
+  else{slideIndex--;}
   showSlides(slideIndex);
 }
 
