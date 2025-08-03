@@ -667,8 +667,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
       clearTimeout(slideTimer);
-      if (diffX < 0) nextSlide();
-      else prevSlide();
+      console.log("Swipe direction:", diffX < 0 ? "LEFT →" : "→ RIGHT");
+      if (diffX < 0) {nextSlide();}
+      else {prevSlide();}
       autoSlides();
     }
   });
