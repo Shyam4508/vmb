@@ -621,18 +621,18 @@ function currentSlide(n) {
 }
 
 function nextSlide() {
-  slideIndex++;
   if (slideIndex > document.querySelectorAll(".slides").length) {
     slideIndex = 1;
   }
+  slideIndex++;
   showSlides(slideIndex);
 }
 
 function prevSlide() {
-  slideIndex--;
   if (slideIndex < 1) {
     slideIndex = document.querySelectorAll(".slides").length;
   }
+  slideIndex--;
   showSlides(slideIndex);
 }
 
