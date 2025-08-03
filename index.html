@@ -495,9 +495,6 @@
 .active-dot {
   background-color: #2e7d32;
 }
-.slideshow-container {
-  touch-action: pan-y;
-}
 
   </style>
 </head>
@@ -539,10 +536,10 @@
   <div class="scroll"><span>🎉 Special Offer: Get 10% OFF on all orders above ₹500! Limited time only! 🎉</span></div>
 <section id="home" class="hero">
   <div class="slideshow-container">
-    <img class="slides" src="b1.jpeg" alt="Combo 1"/>
-    <img class="slides" src="b2.jpeg" alt="Combo 2"/>
-    <img class="slides" src="b3.jpeg" alt="Combo 3"/>
-    <img class="slides" src="b4.jpeg" alt="Combo 4"/>
+    <img class="slides" src="b1.jpeg" alt="Combo 1" />
+    <img class="slides" src="b2.jpeg" alt="Combo 2" />
+    <img class="slides" src="b3.jpeg" alt="Combo 3" />
+    <img class="slides" src="b4.jpeg" alt="Combo 4" />
     <div style="text-align: center; margin-top: 10px;">
       <span class="dot" onclick="currentSlide(1)"></span>
       <span class="dot" onclick="currentSlide(2)"></span>
@@ -603,237 +600,244 @@ function showSlides(n) {
   const slides = document.querySelectorAll(".slides");
   const dots = document.querySelectorAll(".dot");
 
-  if (n > slides.length) {
-    slideIndex = 1;
-  } else if (n < 1) {
-    slideIndex = slides.length;
-  } else {
-    slideIndex = n;
-  }
+  if (n > slides.length) slideIndex = 1;
+  if (n < 1) slideIndex = slides.length;
 
-  slides.forEach(slide => slide.style.display = "none");
+  slides.forEach(slide => (slide.style.display = "none"));
   dots.forEach(dot => dot.classList.remove("active-dot"));
 
-  slides[slideIndex - 1].style.display = "block";
-  dots[slideIndex - 1].classList.add("active-dot");
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].classList.add("active-dot");
 }
 
 function currentSlide(n) {
   clearTimeout(slideTimer);
-  showSlides(n);
+  slideIndex = n;
+  showSlides(slideIndex);
   autoSlides();
 }
 
-function nextSlide() {
-  showSlides(slideIndex + 1);
+function plusSlides(n) {
+  clearTimeout(slideTimer);
+  slideIndex += n;
+  showSlides(slideIndex);
+  autoSlides();
 }
 
-function prevSlide() {
-  showSlides(slideIndex - 1);
+function backSlides(n) {
+  clearTimeout(slideTimer);
+  slideIndex -= n;
+  showSlides(slideIndex);
+  autoSlides();
 }
 
 function autoSlides() {
-  nextSlide();
-  slideTimer = setTimeout(autoSlides, 5000);
+  slideIndex++;
+  showSlides(slideIndex);
+  slideTimer = setTimeout(autoSlides, 6000);
 }
-
-const weights = [0.25, 0.5, 1, 2, 3];
-const cart = {};
 
 document.addEventListener("DOMContentLoaded", () => {
   showSlides(slideIndex);
   autoSlides();
-  renderProducts(); // Make sure this is defined elsewhere
 
-  // ✅ Touch Swipe Logic
+  // Touch swipe logic
   const slideshowContainer = document.querySelector(".slideshow-container");
   let startX = 0;
-  let startY = 0;
 
   slideshowContainer.addEventListener("touchstart", (e) => {
     startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
   });
 
   slideshowContainer.addEventListener("touchend", (e) => {
     const endX = e.changedTouches[0].clientX;
-    const endY = e.changedTouches[0].clientY;
-    const diffX = endX - startX;
-    const diffY = endY - startY;
+    const diffX = startX - endX;
 
-    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
-      clearTimeout(slideTimer);
-      console.log("Swipe direction:", diffX < 0 ? "LEFT → (next)" : "→ RIGHT (prev)");
-      if (diffX < 0) {
-        nextSlide();
+    if (Math.abs(diffX) > 50) {
+      if (diffX > 0) {
+        plusSlides(1); // swipe left
       } else {
-        prevSlide();
+        backSlides(1); // swipe right
       }
-      autoSlides();
     }
   });
 });
 
+    const products = [
+      { name: "Ragi Mixture", image: "Ragi Mixture.jpeg", price: 150 },
+      { name: "Ragi Chegodilu", image: "Ragi Chegodilu.jpeg", price: 160 },
+      { name: "Ragi Murukkulu", image: "Ragi Murukkulu.jpeg", price: 170 },
+      { name: "Jowar Mixture", image: "Jowar Mixture.jpeg", price: 150 },
+      { name: "Jowar Murukkulu", image: "Jowar Murukkulu.jpeg", price: 150 },
+      { name: "Jowar Ribbon Pakodi", image: "Jowar Ribbon Pakodi.jpeg", price: 160 },
+      { name: "Foxtail Sev", image: "Foxtail Sev.jpeg", price: 180 },
+      { name: "Arikalu Jantikalu", image: "Arikalu Jantikalu.jpeg", price: 150 },
+      { name: "Samalu Boondi", image: "Samalu Boondi.jpeg", price: 140 },
+      { name: "Dry Fruit Mixture", image: "Dry Fruit Mixture.jpeg", price: 250 },
+      { name: "Dry Fruit Laddu", image: "Dry Fruit Laddu.jpeg", price: 300 },
+      { name: "Cashew Bar", image: "Cashew Bar.jpeg", price: 200 },
+      { name: "Panchadara Gavvalu", image: "Panchadara Gavvalu.jpg", price: 150 },
+      { name: "Bellam Gavvalu", image: "Bellam Gavvalu.jpeg", price: 160 },
+      { name: "Hot Gavvalu", image: "Hot Gavvalu.jpeg", price: 160 }
+    ];
 
-  // Cart panel toggle
-  document.getElementById("cartIcon").addEventListener("click", toggleCartPanel);
-  document.getElementById("closeCart").addEventListener("click", toggleCartPanel);
-  document.getElementById("overlay").addEventListener("click", toggleCartPanel);
+    const weights = [0.25, 0.5, 1, 2, 3];
+    const cart = {};
 
-  document.querySelector(".clear").addEventListener("click", () => {
-    for (const item in cart) delete cart[item];
-    updateCartDisplay();
-    updateCartCount();
-    document.querySelectorAll(".cart-status").forEach(e => e.textContent = "");
-  });
+    function renderProducts() {
+      const grid = document.getElementById("product-grid");
+      products.forEach(product => {
+        const div = document.createElement("div");
+        div.className = "product-card";
+        div.innerHTML = `
+          <div class="discount-badge">20% OFF</div>
+          <img src="${product.image}" alt="${product.name}" />
+          <h4>${product.name}</h4>
+          <p>₹${product.price} / 250g</p>
+          <div class="quantity-controls">
+            <button onclick="removeFromCart('${product.name}')">-</button>
+            <select id="select-${product.name}">
+              ${weights.map(w => `<option value="${w}">${w} KG</option>`).join('')}
+            </select>
+            <button onclick="addToCart('${product.name}')">+</button>
+          </div>
+          <div class="cart-status" id="status-${product.name}"></div>
+        `;
+        grid.appendChild(div);
+      });
+    }
 
-  document.querySelector(".order").addEventListener("click", sendOrder);
-});
+    function addToCart(productName) {
+      const qty = parseFloat(document.getElementById(`select-${productName}`).value);
+      if (!cart[productName]) {
+        const product = products.find(p => p.name === productName);
+        cart[productName] = { qty: 0, price: product.price };
+      }
+      cart[productName].qty += qty;
+      updateStatus(productName);
+      updateCartDisplay();
+      updateCartCount();
+    }
 
-function renderProducts() {
-  const products = [
-    { name: "Ragi Mixture", image: "Ragi Mixture.jpeg", price: 150 },
-    { name: "Ragi Chegodilu", image: "Ragi Chegodilu.jpeg", price: 160 },
-    { name: "Ragi Murukkulu", image: "Ragi Murukkulu.jpeg", price: 170 },
-    { name: "Jowar Mixture", image: "Jowar Mixture.jpeg", price: 150 },
-    { name: "Jowar Murukkulu", image: "Jowar Murukkulu.jpeg", price: 150 },
-    { name: "Jowar Ribbon Pakodi", image: "Jowar Ribbon Pakodi.jpeg", price: 160 },
-    { name: "Foxtail Sev", image: "Foxtail Sev.jpeg", price: 180 },
-    { name: "Arikalu Jantikalu", image: "Arikalu Jantikalu.jpeg", price: 150 },
-    { name: "Samalu Boondi", image: "Samalu Boondi.jpeg", price: 140 },
-    { name: "Dry Fruit Mixture", image: "Dry Fruit Mixture.jpeg", price: 250 },
-    { name: "Dry Fruit Laddu", image: "Dry Fruit Laddu.jpeg", price: 300 },
-    { name: "Cashew Bar", image: "Cashew Bar.jpeg", price: 200 },
-    { name: "Panchadara Gavvalu", image: "Panchadara Gavvalu.jpg", price: 150 },
-    { name: "Bellam Gavvalu", image: "Bellam Gavvalu.jpeg", price: 160 },
-    { name: "Hot Gavvalu", image: "Hot Gavvalu.jpeg", price: 160 }
-  ];
+    function removeFromCart(productName) {
+      const qty = parseFloat(document.getElementById(`select-${productName}`).value);
+      if (!cart[productName]) return;
+      cart[productName].qty -= qty;
+      if (cart[productName].qty <= 0) delete cart[productName];
+      updateStatus(productName);
+      updateCartDisplay();
+      updateCartCount();
+    }
 
-  const grid = document.getElementById("product-grid");
-  products.forEach(product => {
-    const div = document.createElement("div");
-    div.className = "product-card";
-    div.innerHTML = `
-      <div class="discount-badge">20% OFF</div>
-      <img src="${product.image}" alt="${product.name}" />
-      <h4>${product.name}</h4>
-      <p>₹${product.price} / 250g</p>
-      <div class="quantity-controls">
-        <button onclick="removeFromCart('${product.name}')">-</button>
-        <select id="select-${product.name}">
-          ${weights.map(w => `<option value="${w}">${w} KG</option>`).join('')}
-        </select>
-        <button onclick="addToCart('${product.name}')">+</button>
-      </div>
-      <div class="cart-status" id="status-${product.name}"></div>
-    `;
-    grid.appendChild(div);
-  });
-}
+    function updateStatus(productName) {
+      const status = document.getElementById(`status-${productName}`);
+      if (cart[productName]) {
+        status.textContent = `In cart: ${cart[productName].qty.toFixed(2)} kg`;
+      } else {
+        status.textContent = "";
+      }
+    }
 
-function addToCart(productName) {
-  const qty = parseFloat(document.getElementById(`select-${productName}`).value);
-  if (!cart[productName]) {
-    const price = parseFloat(
-      [...document.querySelectorAll(".product-card")]
-        .find(card => card.innerHTML.includes(productName))
-        .querySelector("p").textContent.match(/₹(\d+)/)[1]
-    );
-    cart[productName] = { qty: 0, price };
-  }
-  cart[productName].qty += qty;
-  updateStatus(productName);
-  updateCartDisplay();
-  updateCartCount();
-}
+    function updateCartCount() {
+      const count = Object.keys(cart).length;
+      document.getElementById("cartCount").textContent = count;
+    }
 
-function removeFromCart(productName) {
-  const qty = parseFloat(document.getElementById(`select-${productName}`).value);
-  if (!cart[productName]) return;
-  cart[productName].qty -= qty;
-  if (cart[productName].qty <= 0) delete cart[productName];
-  updateStatus(productName);
-  updateCartDisplay();
-  updateCartCount();
-}
+    function updateCartDisplay() {
+      const cartItemsContainer = document.getElementById("panel-cart-items");
+      let total = 0;
+      
+      if (Object.keys(cart).length === 0) {
+        cartItemsContainer.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+        document.querySelector(".cart-summary p").textContent = `Total: ₹0.00`;
+        return;
+      }
+      
+      let cartItemsHTML = '';
+      for (const item in cart) {
+        // product.price is per 250g, so per kg multiply by 4
+        const itemTotal = cart[item].qty * cart[item].price * 4;
+        total += itemTotal;
+        
+        cartItemsHTML += `
+          <div class="cart-item">
+            <div class="cart-item-name">${item}</div>
+            <div class="cart-item-qty">
+              <button onclick="adjustCartItem('${item}', -0.25)">-</button>
+              ${cart[item].qty.toFixed(2)} kg
+              <button onclick="adjustCartItem('${item}', 0.25)">+</button>
+            </div>
+            <div class="cart-item-price">₹${itemTotal.toFixed(2)}</div>
+          </div>
+        `;
+      }
+      
+      cartItemsContainer.innerHTML = cartItemsHTML;
+      document.querySelector(".cart-summary p").textContent = `Total: ₹${total.toFixed(2)}`;
+    }
 
-function updateStatus(productName) {
-  const status = document.getElementById(`status-${productName}`);
-  if (cart[productName]) {
-    status.textContent = `In cart: ${cart[productName].qty.toFixed(2)} kg`;
-  } else {
-    status.textContent = "";
-  }
-}
+    function adjustCartItem(productName, adjustment) {
+      if (!cart[productName]) return;
+      
+      cart[productName].qty += adjustment;
+      
+      if (cart[productName].qty <= 0) {
+        delete cart[productName];
+      }
+      
+      updateStatus(productName);
+      updateCartDisplay();
+      updateCartCount();
+    }
 
-function updateCartCount() {
-  const count = Object.keys(cart).length;
-  document.getElementById("cartCount").textContent = count;
-}
+    function toggleCartPanel() {
+      document.getElementById("cartPanel").classList.toggle("active");
+      document.getElementById("overlay").classList.toggle("active");
+    }
 
-function updateCartDisplay() {
-  const container = document.getElementById("panel-cart-items");
-  let total = 0;
-  if (Object.keys(cart).length === 0) {
-    container.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
-    document.querySelector(".cart-summary p").textContent = `Total: ₹0.00`;
-    return;
-  }
+    function sendOrder() {
+      if (Object.keys(cart).length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      let msg = "Hello! I'd like to order:\n";
+      for (const item in cart) {
+        msg += `${item}: ${cart[item].qty.toFixed(2)} kg\n`;
+      }
+      
+      // Calculate total
+      let total = 0;
+      for (const item in cart) {
+        total += cart[item].qty * cart[item].price * 4;
+      }
+      msg += `\nTotal: ₹${total.toFixed(2)}\n\nPlease confirm my order.`;
+      
+      const encodedMsg = encodeURIComponent(msg);
+      window.open(`https://wa.me/919949840365?text=${encodedMsg}`, "_blank");
+    }
 
-  container.innerHTML = "";
-  for (const item in cart) {
-    const itemTotal = cart[item].qty * cart[item].price * 4;
-    total += itemTotal;
-
-    container.innerHTML += `
-      <div class="cart-item">
-        <div class="cart-item-name">${item}</div>
-        <div class="cart-item-qty">
-          <button onclick="adjustCartItem('${item}', -0.25)">-</button>
-          ${cart[item].qty.toFixed(2)} kg
-          <button onclick="adjustCartItem('${item}', 0.25)">+</button>
-        </div>
-        <div class="cart-item-price">₹${itemTotal.toFixed(2)}</div>
-      </div>
-    `;
-  }
-
-  document.querySelector(".cart-summary p").textContent = `Total: ₹${total.toFixed(2)}`;
-}
-
-function adjustCartItem(productName, adjustment) {
-  if (!cart[productName]) return;
-  cart[productName].qty += adjustment;
-  if (cart[productName].qty <= 0) delete cart[productName];
-  updateStatus(productName);
-  updateCartDisplay();
-  updateCartCount();
-}
-
-function toggleCartPanel() {
-  document.getElementById("cartPanel").classList.toggle("active");
-  document.getElementById("overlay").classList.toggle("active");
-}
-
-function sendOrder() {
-  if (Object.keys(cart).length === 0) {
-    alert("Your cart is empty!");
-    return;
-  }
-  let msg = "Hello! I'd like to order:\n";
-  for (const item in cart) {
-    msg += `${item}: ${cart[item].qty.toFixed(2)} kg\n`;
-  }
-
-  let total = 0;
-  for (const item in cart) {
-    total += cart[item].qty * cart[item].price * 4;
-  }
-  msg += `\nTotal: ₹${total.toFixed(2)}\n\nPlease confirm my order.`;
-
-  const encodedMsg = encodeURIComponent(msg);
-  window.open(`https://wa.me/919949840365?text=${encodedMsg}`, "_blank");
-}
-</script>
+    document.addEventListener("DOMContentLoaded", () => {
+      showSlides();
+      renderProducts();
+      
+      // Cart panel toggle
+      document.getElementById("cartIcon").addEventListener("click", toggleCartPanel);
+      document.getElementById("closeCart").addEventListener("click", toggleCartPanel);
+      document.getElementById("overlay").addEventListener("click", toggleCartPanel);
+      
+      // Clear cart button
+      document.querySelector(".clear").addEventListener("click", () => {
+        for (const item in cart) {
+          delete cart[item];
+          updateStatus(item);
+        }
+        updateCartDisplay();
+        updateCartCount();
+      });
+      
+      // Order button
+      document.querySelector(".order").addEventListener("click", sendOrder);
+    });
+  </script>
 </body>
 </html>
