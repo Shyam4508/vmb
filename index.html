@@ -592,7 +592,7 @@
   </footer>
   <a href="https://wa.me/919949840365" class="whatsapp-float" target="_blank">💬</a>
 
-  <script>
+<script>
 let slideIndex = 1;
 let slideTimer;
 
@@ -624,6 +624,13 @@ function plusSlides(n) {
   autoSlides();
 }
 
+function backSlides(n) {
+  clearTimeout(slideTimer);
+  slideIndex -= n;
+  showSlides(slideIndex);
+  autoSlides();
+}
+
 function autoSlides() {
   slideIndex++;
   showSlides(slideIndex);
@@ -650,7 +657,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (diffX > 0) {
         plusSlides(1); // swipe left
       } else {
-        plusSlides(-1); // swipe right
+        backSlides(1); // swipe right
       }
     }
   });
