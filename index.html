@@ -1,833 +1,841 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Millet Bites</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #fdfdfd;
-      color: #333;
-      line-height: 1.6;
-    }
-    .scroll {
-      background-color: #f1f8e9;
-      color: #2e7d32;
-      padding: 10px;
-      overflow: hidden;
-      white-space: nowrap;
-      box-shadow: inset 0 -1px 0 rgba(0,0,0,0.1);
-    }
-    .scroll span {
-      display: inline-block;
-      padding-left: 100%;
-      animation: scroll-left 25s linear infinite;
-    }
-    @keyframes scroll-left {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-    header {
-      background-color: #2e7d32;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 25px;
-      flex-wrap: wrap;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-    }
-    nav a {
-      color: white;
-      margin: 0 12px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    nav a:hover {
-      color: #c8e6c9;
-    }
-    .discount-badge {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: #00c853;
-      color: #fff;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 4px 8px;
-      border-radius: 12px;
-      z-index: 1;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-    .hero {
-      text-align: center;
-      padding: 10px 20px;
-      background: #e8f5e9;
-    }
-    .slideshow-container {
-      position: relative;
-      max-width: 700px;
-      margin: 0 auto;
-      overflow: hidden;
-    }
-    .slides {
-      display: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: 100%;
-    }
-    .slide-text {
-      margin-top: 15px;
-    }
-    .hero h4 {
-      font-size: 1.1em;
-      color: #2e7d32;
-    }
-    .hero p {
-      font-size: 1.0em;
-      color: #555;
-      font-weight: bold;
-    }
-    .menu {
-      padding: 10px 20px;
-      background-color: #f1f8e9;
-    }
-    .menu h2 {
-      text-align: center;
-      font-size: 2em;
-      color: #33691e;
-      margin-bottom: 30px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      padding: 0 10px;
-    }
-    .card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    .card img {
-      max-width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-    .card-content {
-      padding: 15px;
-    }
-    .card-content h3 {
-      margin: 10px 0 5px;
-      font-size: 1.2em;
-    }
-    .card-content p.description {
-      font-size: 0.95em;
-      color: #666;
-      margin: 5px 0;
-    }
-    .tags {
-      margin: 8px 0;
-    }
-    .tags span {
-      background-color: #fff3e0;
-      color: #f57c00;
-      padding: 4px 8px;
-      border-radius: 12px;
-      margin-right: 5px;
-      font-size: 0.8em;
-    }
-    .price-section {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 10px 0;
-    }
-    .price-section .price {
-      font-size: 1.1em;
-      font-weight: bold;
-    }
-    .price-section .old-price {
-      text-decoration: line-through;
-      color: #888;
-      margin-left: 8px;
-    }
-    .weight {
-      font-size: 0.9em;
-      color: #555;
-    }
-    .quantity-selector {
-      display: flex;
-      align-items: center;
-      margin: 10px 0;
-    }
-    .quantity-selector span {
-      padding: 0 12px;
-      font-weight: bold;
-    }
-    .quantity-selector button {
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
-      width: 30px;
-      height: 30px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-    .quantity-selector button:hover {
-      transform: scale(1.05);
-    }
-    .card-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .card-buttons button {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .card-buttons .order-now {
-      background-color: #ffa000;
-      color: white;
-    }
-    .card-buttons .view-details {
-      background-color: #eeeeee;
-      color: #333;
-    }
-    .about-contact {
-      padding: 40px 20px;
-      background: #fffde7;
-    }
-    .about-contact h2,
-    .about-contact p {
-      text-align: center;
-      color: #5d4037;
-    }
-    .contact-icons {
-      text-align: center;
-      font-size: 1.8em;
-      margin-top: 15px;
-    }
-    .cart {
-      background-color: #c8e6c9;
-      padding: 20px;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-      position: sticky;
-      bottom: 0;
-      z-index: 10;
-      display: none;
-    }
-    .cart-summary {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    .cart-summary p {
-      font-size: 1.2em;
-      font-weight: bold;
-      margin: 0;
-    }
-    .cart-items {
-      max-height: 200px;
-      overflow-y: auto;
-      margin-bottom: 15px;
-      border-top: 1px solid #a5d6a7;
-      border-bottom: 1px solid #a5d6a7;
-      padding: 10px 0;
-    }
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid #e0e0e0;
-    }
-    .cart-item:last-child {
-      border-bottom: none;
-    }
-    .cart-item-name {
-      flex: 2;
-      font-weight: 500;
-    }
-    .cart-item-qty {
-      flex: 1;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
-    .cart-item-qty button {
-      background: #f0f0f0;
-      border: 1px solid #ccc;
-      width: 25px;
-      height: 25px;
-      font-size: 14px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    .cart-item-price {
-      flex: 1;
-      text-align: right;
-      font-weight: bold;
-    }
-    .cart-buttons {
-      display: flex;
-      gap: 10px;
-    }
-    .cart button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-    .cart button:hover {
-      transform: scale(1.05);
-    }
-    .order {
-      background-color: #388e3c;
-      color: white;
-    }
-    .clear {
-      background-color: #bdbdbd;
-      color: white;
-    }
-    @media (max-width: 768px) {
-      nav {
-        margin-top: 10px;
-        text-align: center;
-        width: 100%;
-      }
-      .grid {
-        grid-template-columns: repeat(120px,2fr);
-      }
-      .cart-buttons {
-        flex-direction: column;
-      }
-      .cart button {
-        width: 100%;
-      }
-    }
-    .whatsapp-float {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #25D366;
-      color: white;
-      border-radius: 50%;
-      padding: 15px;
-      font-size: 24px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      z-index: 1000;
-      text-decoration: none;
-    }
-    footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #eee;
-      margin-top: 40px;
-    }
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-    }
-    .product-card {
-      background: #fff;
-      padding: 12px;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
-      position: relative;
-    }
-    .product-card img {
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-      border-radius: 6px;
-    }
-    .product-card h4 {
-      margin: 8px 0 5px;
-      font-size: 1.1em;
-    }
-    .product-card p {
-      margin: 0;
-      font-size: 0.95em;
-      color: #2e7d32;
-      font-weight: bold;
-    }
-    .quantity-controls {
-      margin: 10px 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-    }
-    .quantity-controls button {
-      padding: 5px 10px;
-      font-size: 14px;
-      cursor: pointer;
-      background: #e0e0e0;
-      border: none;
-      border-radius: 4px;
-      transition: background 0.2s ease, transform 0.15s ease;
-    }
-    .quantity-controls button:hover {
-      transform: scale(1.05);
-    }
-    .quantity-controls select {
-      padding: 4px;
-      font-size: 14px;
-      border-radius: 4px;
-    }
-    .cart-status {
-      margin-top: 6px;
-      font-size: 0.9em;
-      color: #555;
-    }
-    .empty-cart {
-      text-align: center;
-      color: #666;
-      padding: 20px;
-    }
-    .cart-icon {
-      position: relative;
-      cursor: pointer;
-      margin-left: 20px;
-    }
-    .cart-count {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: #ff5722;
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: bold;
-    }
-    .header-right {
-      display: flex;
-      align-items: center;
-    }
-    .cart-panel {
-      position: fixed;
-      top: 0;
-      right: -400px;
-      width: 350px;
-      height: 100%;
-      background: white;
-      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-      transition: right 0.3s ease;
-      z-index: 1100;
-      padding: 20px;
-      overflow-y: auto;
-    }
-    .cart-panel.active {
-      right: 0;
-    }
-    .cart-panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #eee;
-    }
-    .close-cart {
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-    }
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 1000;
-      display: none;
-    }
-    .overlay.active {
-      display: block;
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Millet Bites</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fdfdfd;
+      color: #333;
+      line-height: 1.6;
+    }
+    .scroll {
+      background-color: #f1f8e9;
+      color: #2e7d32;
+      padding: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      box-shadow: inset 0 -1px 0 rgba(0,0,0,0.1);
+    }
+    .scroll span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll-left 25s linear infinite;
+    }
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    header {
+      background-color: #2e7d32;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 25px;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    nav a {
+      color: white;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #c8e6c9;
+    }
+    .discount-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #00c853;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 12px;
+      z-index: 1;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .hero {
+      text-align: center;
+      padding: 10px 20px;
+      background: #e8f5e9;
+    }
+    .slideshow-container {
+      position: relative;
+      max-width: 700px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .slides {
+      display: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+    }
+    .slide-text {
+      margin-top: 15px;
+    }
+    .hero h4 {
+      font-size: 1.1em;
+      color: #2e7d32;
+    }
+    .hero p {
+      font-size: 1.0em;
+      color: #555;
+      font-weight: bold;
+    }
+    .menu {
+      padding: 10px 20px;
+      background-color: #f1f8e9;
+    }
+    .menu h2 {
+      text-align: center;
+      font-size: 2em;
+      color: #33691e;
+      margin-bottom: 30px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 0 10px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      max-width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 15px;
+    }
+    .card-content h3 {
+      margin: 10px 0 5px;
+      font-size: 1.2em;
+    }
+    .card-content p.description {
+      font-size: 0.95em;
+      color: #666;
+      margin: 5px 0;
+    }
+    .tags {
+      margin: 8px 0;
+    }
+    .tags span {
+      background-color: #fff3e0;
+      color: #f57c00;
+      padding: 4px 8px;
+      border-radius: 12px;
+      margin-right: 5px;
+      font-size: 0.8em;
+    }
+    .price-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+    .price-section .price {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    .price-section .old-price {
+      text-decoration: line-through;
+      color: #888;
+      margin-left: 8px;
+    }
+    .weight {
+      font-size: 0.9em;
+      color: #555;
+    }
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .quantity-selector span {
+      padding: 0 12px;
+      font-weight: bold;
+    }
+    .quantity-selector button {
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .quantity-selector button:hover {
+      transform: scale(1.05);
+    }
+    .card-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .card-buttons button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .card-buttons .order-now {
+      background-color: #ffa000;
+      color: white;
+    }
+    .card-buttons .view-details {
+      background-color: #eeeeee;
+      color: #333;
+    }
+    .about-contact {
+      padding: 40px 20px;
+      background: #fffde7;
+    }
+    .about-contact h2,
+    .about-contact p {
+      text-align: center;
+      color: #5d4037;
+    }
+    .contact-icons {
+      text-align: center;
+      font-size: 1.8em;
+      margin-top: 15px;
+    }
+    .cart {
+      background-color: #c8e6c9;
+      padding: 20px;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      display: none;
+    }
+    .cart-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .cart-summary p {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin: 0;
+    }
+    .cart-items {
+      max-height: 200px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+      border-top: 1px solid #a5d6a7;
+      border-bottom: 1px solid #a5d6a7;
+      padding: 10px 0;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    .cart-item-name {
+      flex: 2;
+      font-weight: 500;
+    }
+    .cart-item-qty {
+      flex: 1;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .cart-item-qty button {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      width: 25px;
+      height: 25px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .cart-item-price {
+      flex: 1;
+      text-align: right;
+      font-weight: bold;
+    }
+    .cart-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .cart button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .cart button:hover {
+      transform: scale(1.05);
+    }
+    .order {
+      background-color: #388e3c;
+      color: white;
+    }
+    .clear {
+      background-color: #bdbdbd;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      nav {
+        margin-top: 10px;
+        text-align: center;
+        width: 100%;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .cart-buttons {
+        flex-direction: column;
+      }
+      .cart button {
+        width: 100%;
+      }
+    }
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 24px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      text-decoration: none;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #eee;
+      margin-top: 40px;
+    }
+    .product-grid {
+      display: grid;
+      gap: 20px;
+    }
+    /* Desktop layout (default) */
+    .product-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    /* Mobile layout */
+    @media (max-width: 767px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .product-card {
+      background: #fff;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      position: relative;
+    }
+    .product-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .product-card h4 {
+      margin: 8px 0 5px;
+      font-size: 1.1em;
+    }
+    .product-card p {
+      margin: 0;
+      font-size: 0.95em;
+      color: #2e7d32;
+      font-weight: bold;
+    }
+    .quantity-controls {
+      margin: 10px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+    .quantity-controls button {
+      padding: 5px 10px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #e0e0e0;
+      border: none;
+      border-radius: 4px;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+    .quantity-controls button:hover {
+      transform: scale(1.05);
+    }
+    .quantity-controls select {
+      padding: 4px;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+    .cart-status {
+      margin-top: 6px;
+      font-size: 0.9em;
+      color: #555;
+    }
+    .empty-cart {
+      text-align: center;
+      color: #666;
+      padding: 20px;
+    }
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      margin-left: 20px;
+    }
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #ff5722;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+    .cart-panel {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 350px;
+      height: 100%;
+      background: white;
+      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+      transition: right 0.3s ease;
+      z-index: 1100;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .cart-panel.active {
+      right: 0;
+    }
+    .cart-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      display: none;
+    }
+    .overlay.active {
+      display: block;
+    }
 .dot {
-  height: 12px;
-  width: 12px;
-  margin: 0 5px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.3s ease;
-  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 .active-dot {
-  background-color: #2e7d32;
+  background-color: #2e7d32;
 }
-        .dot-container {
-      text-align: center;
-      position: absolute;
-      bottom: 15px;
-      width: 100%;
-    }
+        .dot-container {
+      text-align: center;
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+    }
 
-  </style>
+  </style>
 </head>
 <body>
-  <div class="overlay" id="overlay"></div>
-  <div class="cart-panel" id="cartPanel">
-    <div class="cart-panel-header">
-      <h3>Your Cart</h3>
-      <button class="close-cart" id="closeCart">&times;</button>
-    </div>
-    <div class="cart-items" id="panel-cart-items">
-      <div class="empty-cart">Your cart is empty</div>
-    </div>
-    <div class="cart-summary">
-      <p>Total: ₹0.00</p>
-    </div>
-    <div class="cart-buttons">
-      <button class="order">Order on WhatsApp</button>
-      <button class="clear">Clear Cart</button>
-    </div>
-  </div>
+  <div class="overlay" id="overlay"></div>
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-panel-header">
+      <h3>Your Cart</h3>
+      <button class="close-cart" id="closeCart">&times;</button>
+    </div>
+    <div class="cart-items" id="panel-cart-items">
+      <div class="empty-cart">Your cart is empty</div>
+    </div>
+    <div class="cart-summary">
+      <p>Total: ₹0.00</p>
+    </div>
+    <div class="cart-buttons">
+      <button class="order">Order on WhatsApp</button>
+      <button class="clear">Clear Cart</button>
+    </div>
+  </div>
 
-  <header>
-    <h1>Millet Bites</h1>
-    <div class="header-right">
-      <nav>
-        <a href="#home">Home</a>
-        <a href="#menu">Menu</a>
-        <a href="#about">About Us</a>
-        <a href="#contact">Contact</a>
-        <a href="#reviews">Reviews</a>
-      </nav>
-      <div class="cart-icon" id="cartIcon">
-        🛒
-        <span class="cart-count" id="cartCount">0</span>
-      </div>
-    </div>
-  </header>
-  <div class="scroll"><span>🎉 Special Offer: Get 10% OFF on all orders above ₹500! Limited time only! 🎉</span></div>
+  <header>
+    <h1>Millet Bites</h1>
+    <div class="header-right">
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+        <a href="#reviews">Reviews</a>
+      </nav>
+      <div class="cart-icon" id="cartIcon">
+        🛒
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+    </div>
+  </header>
+  <div class="scroll"><span>🎉 Special Offer: Get 10% OFF on all orders above ₹500! Limited time only! 🎉</span></div>
 <section id="home" class="hero">
-  <div class="slideshow-container">
-    <img class="slides" src="b1.jpeg" alt="Combo 1" />
-    <img class="slides" src="b2.jpeg" alt="Combo 2" />
-    <img class="slides" src="b3.jpeg" alt="Combo 3" />
-    <img class="slides" src="b4.jpeg" alt="Combo 4" />
-    <div style="text-align: center; margin-top: 10px;">
-      <span class="dot" data-index="1"></span>
-      <span class="dot" data-index="2"></span>
-      <span class="dot" data-index="3"></span>
-      <span class="dot" data-index="4"></span>
-    </div>
-  </div>
-  <div class="slide-text">
-    <h4>Welcome to Millet Bites – Experience delicious flavour with our healthy, tasty, and affordable millet-based snacks!</h4>
-    <p>Healthy | Tasty | Affordable</p>
-  </div>
+  <div class="slideshow-container">
+    <img class="slides" src="b1.jpeg" alt="Combo 1" />
+    <img class="slides" src="b2.jpeg" alt="Combo 2" />
+    <img class="slides" src="b3.jpeg" alt="Combo 3" />
+    <img class="slides" src="b4.jpeg" alt="Combo 4" />
+    <div style="text-align: center; margin-top: 10px;">
+      <span class="dot" data-index="1"></span>
+      <span class="dot" data-index="2"></span>
+      <span class="dot" data-index="3"></span>
+      <span class="dot" data-index="4"></span>
+    </div>
+  </div>
+  <div class="slide-text">
+    <h4>Welcome to Millet Bites – Experience delicious flavour with our healthy, tasty, and affordable millet-based snacks!</h4>
+    <p>Healthy | Tasty | Affordable</p>
+  </div>
 </section>
 
-  <section id="menu" class="menu">
-    <h2>Our Menu</h2>
-    <div class="product-grid" id="product-grid"></div>
-  </section>
+  <section id="menu" class="menu">
+    <h2>Our Menu</h2>
+    <div class="product-grid" id="product-grid"></div>
+  </section>
 
-  <section id="about" class="about-contact">
-    <h2>About Us</h2>
-    <p>We're a Vizag-based brand bringing healthy snacking to your doorstep.</p>
-  </section>
+  <section id="about" class="about-contact">
+    <h2>About Us</h2>
+    <p>We're a Vizag-based brand bringing healthy snacking to your doorstep.</p>
+  </section>
 
-  <section id="contact" class="about-contact" style="background: #e3f2fd;">
-    <h2>Contact Us</h2>
-    <p>Reach us on:</p>
-    <div class="contact-icons">
-      <div style="display: flex; justify-content: center; gap: 20px;">
-        <a href="https://wa.me/919949840365" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" style="height: 30px; width: 30px;">
-        </a>
-        <a href="https://instagram.com/vizagMilletBites" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" style="height: 30px; width: 30px;">
-        </a>
-        <a href="tel:+919949840365" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/724/724664.png" alt="Phone" style="height: 30px; width: 30px;">
-        </a>
-      </div>
-    </div>
-  </section>
+  <section id="contact" class="about-contact" style="background: #e3f2fd;">
+    <h2>Contact Us</h2>
+    <p>Reach us on:</p>
+    <div class="contact-icons">
+      <div style="display: flex; justify-content: center; gap: 20px;">
+        <a href="https://wa.me/919949840365" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" style="height: 30px; width: 30px;">
+        </a>
+        <a href="https://instagram.com/vizagMilletBites" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" style="height: 30px; width: 30px;">
+        </a>
+        <a href="tel:+919949840365" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/724/724664.png" alt="Phone" style="height: 30px; width: 30px;">
+        </a>
+      </div>
+    </div>
+  </section>
 
-  <section id="reviews" class="about-contact" style="background: #fff8e1;">
-    <h2>Customer Reviews</h2>
-    <p>“Absolutely loved the Ragi Mixture—crunchy and wholesome!”</p>
-    <p>“Fast delivery, fresh taste. Will order again.”</p>
-  </section>
+  <section id="reviews" class="about-contact" style="background: #fff8e1;">
+    <h2>Customer Reviews</h2>
+    <p>“Absolutely loved the Ragi Mixture—crunchy and wholesome!”</p>
+    <p>“Fast delivery, fresh taste. Will order again.”</p>
+  </section>
 
-  <footer>
-    &copy; 2025 Millet Bites. All rights reserved.
-  </footer>
-  <a href="https://wa.me/919949840365" class="whatsapp-float" target="_blank">💬</a>
+  <footer>
+    &copy; 2025 Millet Bites. All rights reserved.
+  </footer>
+  <a href="https://wa.me/919949840365" class="whatsapp-float" target="_blank">💬</a>
 
 <script>
-    let slideIndex = 1;
-    let slideTimer;
+    let slideIndex = 1;
+    let slideTimer;
 
-    function showSlides(n) {
-      const slides = document.querySelectorAll(".slides");
-      const dots = document.querySelectorAll(".dot");
+    function showSlides(n) {
+      const slides = document.querySelectorAll(".slides");
+      const dots = document.querySelectorAll(".dot");
 
-      if (n > slides.length) slideIndex = 1;
-      if (n < 1) slideIndex = slides.length;
+      if (n > slides.length) slideIndex = 1;
+      if (n < 1) slideIndex = slides.length;
 
-      slides.forEach(slide => slide.style.display = "none");
-      dots.forEach(dot => dot.classList.remove("active-dot"));
+      slides.forEach(slide => slide.style.display = "none");
+      dots.forEach(dot => dot.classList.remove("active-dot"));
 
-      slides[slideIndex - 1].style.display = "block";
-      dots[slideIndex - 1].classList.add("active-dot");
-    }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].classList.add("active-dot");
+    }
 
-    function nextSlide() {
-      slideIndex++;
-      showSlides(slideIndex);
-    }
+    function nextSlide() {
+      slideIndex++;
+      showSlides(slideIndex);
+    }
 
-    function currentSlide(n) {
-      clearTimeout(slideTimer);
-      slideIndex = n;
-      showSlides(slideIndex);
-      autoSlides();
-    }
+    function currentSlide(n) {
+      clearTimeout(slideTimer);
+      slideIndex = n;
+      showSlides(slideIndex);
+      autoSlides();
+    }
 
-    function autoSlides() {
-      slideTimer = setTimeout(() => {
-        nextSlide();
-        autoSlides();
-      }, 5000);
-    }
+    function autoSlides() {
+      slideTimer = setTimeout(() => {
+        nextSlide();
+        autoSlides();
+      }, 5000);
+    }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      showSlides(slideIndex);
-      autoSlides();
+    document.addEventListener("DOMContentLoaded", () => {
+      showSlides(slideIndex);
+      autoSlides();
 
-      const dots = document.querySelectorAll(".dot");
-      dots.forEach(dot => {
-        dot.addEventListener("click", () => {
-          const index = parseInt(dot.getAttribute("data-index"));
-          currentSlide(index);
-        });
-      });
-    });
-  
-  const products = [
-      { name: "Ragi Mixture", image: "Ragi Mixture.jpeg", price: 150 },
-      { name: "Ragi Chegodilu", image: "Ragi Chegodilu.jpeg", price: 160 },
-      { name: "Ragi Murukkulu", image: "Ragi Murukkulu.jpeg", price: 170 },
-      { name: "Jowar Mixture", image: "Jowar Mixture.jpeg", price: 150 },
-      { name: "Jowar Murukkulu", image: "Jowar Murukkulu.jpeg", price: 150 },
-      { name: "Jowar Ribbon Pakodi", image: "Jowar Ribbon Pakodi.jpeg", price: 160 },
-      { name: "Foxtail Sev", image: "Foxtail Sev.jpeg", price: 180 },
-      { name: "Arikalu Jantikalu", image: "Arikalu Jantikalu.jpeg", price: 150 },
-      { name: "Samalu Boondi", image: "Samalu Boondi.jpeg", price: 140 },
-      { name: "Dry Fruit Mixture", image: "Dry Fruit Mixture.jpeg", price: 250 },
-      { name: "Dry Fruit Laddu", image: "Dry Fruit Laddu.jpeg", price: 300 },
-      { name: "Cashew Bar", image: "Cashew Bar.jpeg", price: 200 },
-      { name: "Panchadara Gavvalu", image: "Panchadara Gavvalu.jpg", price: 150 },
-      { name: "Bellam Gavvalu", image: "Bellam Gavvalu.jpeg", price: 160 },
-      { name: "Hot Gavvalu", image: "Hot Gavvalu.jpeg", price: 160 },
-      { name: "combo 1", image: "Hot Gavvalu.jpeg", price: 299 },
-      { name: "combo 2", image: "Hot Gavvalu.jpeg", price: 399 },
-      { name: "Combo 3", image: "Hot Gavvalu.jpeg", price: 599 }
+      const dots = document.querySelectorAll(".dot");
+      dots.forEach(dot => {
+        dot.addEventListener("click", () => {
+          const index = parseInt(dot.getAttribute("data-index"));
+          currentSlide(index);
+        });
+      });
+    });
+  
+  const products = [
+      { name: "Ragi Mixture", image: "Ragi Mixture.jpeg", price: 150 },
+      { name: "Ragi Chegodilu", image: "Ragi Chegodilu.jpeg", price: 160 },
+      { name: "Ragi Murukkulu", image: "Ragi Murukkulu.jpeg", price: 170 },
+      { name: "Jowar Mixture", image: "Jowar Mixture.jpeg", price: 150 },
+      { name: "Jowar Murukkulu", image: "Jowar Murukkulu.jpeg", price: 150 },
+      { name: "Jowar Ribbon Pakodi", image: "Jowar Ribbon Pakodi.jpeg", price: 160 },
+      { name: "Foxtail Sev", image: "Foxtail Sev.jpeg", price: 180 },
+      { name: "Arikalu Jantikalu", image: "Arikalu Jantikalu.jpeg", price: 150 },
+      { name: "Samalu Boondi", image: "Samalu Boondi.jpeg", price: 140 },
+      { name: "Dry Fruit Mixture", image: "Dry Fruit Mixture.jpeg", price: 250 },
+      { name: "Dry Fruit Laddu", image: "Dry Fruit Laddu.jpeg", price: 300 },
+      { name: "Cashew Bar", image: "Cashew Bar.jpeg", price: 200 },
+      { name: "Panchadara Gavvalu", image: "Panchadara Gavvalu.jpg", price: 150 },
+      { name: "Bellam Gavvalu", image: "Bellam Gavvalu.jpeg", price: 160 },
+      { name: "Hot Gavvalu", image: "Hot Gavvalu.jpeg", price: 160 },
+      { name: "combo 1", image: "Hot Gavvalu.jpeg", price: 299 },
+      { name: "combo 2", image: "Hot Gavvalu.jpeg", price: 399 },
+      { name: "Combo 3", image: "Hot Gavvalu.jpeg", price: 599 }
 
-    ];
+    ];
 
-    const weights = [0.25, 0.5, 1, 2, 3];
-    const cart = {};
+    const weights = [0.25, 0.5, 1, 2, 3];
+    const cart = {};
 
-    function renderProducts() {
-      const grid = document.getElementById("product-grid");
-      products.forEach(product => {
-        const div = document.createElement("div");
-        div.className = "product-card";
-        div.innerHTML = `
-          <div class="discount-badge">20% OFF</div>
-          <img src="${product.image}" alt="${product.name}" />
-          <h4>${product.name}</h4>
-          <p>₹${product.price} / 250g</p>
-          <div class="quantity-controls">
-            <button onclick="removeFromCart('${product.name}')">-</button>
-            <select id="select-${product.name}">
-              ${weights.map(w => `<option value="${w}">${w} KG</option>`).join('')}
-            </select>
-            <button onclick="addToCart('${product.name}')">+</button>
-          </div>
-          <div class="cart-status" id="status-${product.name}"></div>
-        `;
-        grid.appendChild(div);
-      });
-    }
+    function renderProducts() {
+      const grid = document.getElementById("product-grid");
+      products.forEach(product => {
+        const div = document.createElement("div");
+        div.className = "product-card";
+        div.innerHTML = `
+          <div class="discount-badge">20% OFF</div>
+          <img src="${product.image}" alt="${product.name}" />
+          <h4>${product.name}</h4>
+          <p>₹${product.price} / 250g</p>
+          <div class="quantity-controls">
+            <button onclick="removeFromCart('${product.name}')">-</button>
+            <select id="select-${product.name}">
+              ${weights.map(w => `<option value="${w}">${w} KG</option>`).join('')}
+            </select>
+            <button onclick="addToCart('${product.name}')">+</button>
+          </div>
+          <div class="cart-status" id="status-${product.name}"></div>
+        `;
+        grid.appendChild(div);
+      });
+    }
 
-    function addToCart(productName) {
-      const qty = parseFloat(document.getElementById(`select-${productName}`).value);
-      if (!cart[productName]) {
-        const product = products.find(p => p.name === productName);
-        cart[productName] = { qty: 0, price: product.price };
-      }
-      cart[productName].qty += qty;
-      updateStatus(productName);
-      updateCartDisplay();
-      updateCartCount();
-    }
+    function addToCart(productName) {
+      const qty = parseFloat(document.getElementById(`select-${productName}`).value);
+      if (!cart[productName]) {
+        const product = products.find(p => p.name === productName);
+        cart[productName] = { qty: 0, price: product.price };
+      }
+      cart[productName].qty += qty;
+      updateStatus(productName);
+      updateCartDisplay();
+      updateCartCount();
+    }
 
-    function removeFromCart(productName) {
-      const qty = parseFloat(document.getElementById(`select-${productName}`).value);
-      if (!cart[productName]) return;
-      cart[productName].qty -= qty;
-      if (cart[productName].qty <= 0) delete cart[productName];
-      updateStatus(productName);
-      updateCartDisplay();
-      updateCartCount();
-    }
+    function removeFromCart(productName) {
+      const qty = parseFloat(document.getElementById(`select-${productName}`).value);
+      if (!cart[productName]) return;
+      cart[productName].qty -= qty;
+      if (cart[productName].qty <= 0) delete cart[productName];
+      updateStatus(productName);
+      updateCartDisplay();
+      updateCartCount();
+    }
 
-    function updateStatus(productName) {
-      const status = document.getElementById(`status-${productName}`);
-      if (cart[productName]) {
-        status.textContent = `In cart: ${cart[productName].qty.toFixed(2)} kg`;
-      } else {
-        status.textContent = "";
-      }
-    }
+    function updateStatus(productName) {
+      const status = document.getElementById(`status-${productName}`);
+      if (cart[productName]) {
+        status.textContent = `In cart: ${cart[productName].qty.toFixed(2)} kg`;
+      } else {
+        status.textContent = "";
+      }
+    }
 
-    function updateCartCount() {
-      const count = Object.keys(cart).length;
-      document.getElementById("cartCount").textContent = count;
-    }
+    function updateCartCount() {
+      const count = Object.keys(cart).length;
+      document.getElementById("cartCount").textContent = count;
+    }
 
-    function updateCartDisplay() {
-      const cartItemsContainer = document.getElementById("panel-cart-items");
-      let total = 0;
-      
-      if (Object.keys(cart).length === 0) {
-        cartItemsContainer.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
-        document.querySelector(".cart-summary p").textContent = `Total: ₹0.00`;
-        return;
-      }
-      
-      let cartItemsHTML = '';
-      for (const item in cart) {
-        // product.price is per 250g, so per kg multiply by 4
-        const itemTotal = cart[item].qty * cart[item].price * 4;
-        total += itemTotal;
-        
-        cartItemsHTML += `
-          <div class="cart-item">
-            <div class="cart-item-name">${item}</div>
-            <div class="cart-item-qty">
-              <button onclick="adjustCartItem('${item}', -0.25)">-</button>
-              ${cart[item].qty.toFixed(2)} kg
-              <button onclick="adjustCartItem('${item}', 0.25)">+</button>
-            </div>
-            <div class="cart-item-price">₹${itemTotal.toFixed(2)}</div>
-          </div>
-        `;
-      }
-      
-      cartItemsContainer.innerHTML = cartItemsHTML;
-      document.querySelector(".cart-summary p").textContent = `Total: ₹${total.toFixed(2)}`;
-    }
+    function updateCartDisplay() {
+      const cartItemsContainer = document.getElementById("panel-cart-items");
+      let total = 0;
+      
+      if (Object.keys(cart).length === 0) {
+        cartItemsContainer.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+        document.querySelector(".cart-summary p").textContent = `Total: ₹0.00`;
+        return;
+      }
+      
+      let cartItemsHTML = '';
+      for (const item in cart) {
+        // product.price is per 250g, so per kg multiply by 4
+        const itemTotal = cart[item].qty * cart[item].price * 4;
+        total += itemTotal;
+        
+        cartItemsHTML += `
+          <div class="cart-item">
+            <div class="cart-item-name">${item}</div>
+            <div class="cart-item-qty">
+              <button onclick="adjustCartItem('${item}', -0.25)">-</button>
+              ${cart[item].qty.toFixed(2)} kg
+              <button onclick="adjustCartItem('${item}', 0.25)">+</button>
+            </div>
+            <div class="cart-item-price">₹${itemTotal.toFixed(2)}</div>
+          </div>
+        `;
+      }
+      
+      cartItemsContainer.innerHTML = cartItemsHTML;
+      document.querySelector(".cart-summary p").textContent = `Total: ₹${total.toFixed(2)}`;
+    }
 
-    function adjustCartItem(productName, adjustment) {
-      if (!cart[productName]) return;
-      
-      cart[productName].qty += adjustment;
-      
-      if (cart[productName].qty <= 0) {
-        delete cart[productName];
-      }
-      
-      updateStatus(productName);
-      updateCartDisplay();
-      updateCartCount();
-    }
+    function adjustCartItem(productName, adjustment) {
+      if (!cart[productName]) return;
+      
+      cart[productName].qty += adjustment;
+      
+      if (cart[productName].qty <= 0) {
+        delete cart[productName];
+      }
+      
+      updateStatus(productName);
+      updateCartDisplay();
+      updateCartCount();
+    }
 
-    function toggleCartPanel() {
-      document.getElementById("cartPanel").classList.toggle("active");
-      document.getElementById("overlay").classList.toggle("active");
-    }
+    function toggleCartPanel() {
+      document.getElementById("cartPanel").classList.toggle("active");
+      document.getElementById("overlay").classList.toggle("active");
+    }
 
-    function sendOrder() {
-      if (Object.keys(cart).length === 0) {
-        alert("Your cart is empty!");
-        return;
-      }
-      let msg = "Hello! I'd like to order:\n";
-      for (const item in cart) {
-        msg += `${item}: ${cart[item].qty.toFixed(2)} kg\n`;
-      }
-      
-      // Calculate total
-      let total = 0;
-      for (const item in cart) {
-        total += cart[item].qty * cart[item].price * 4;
-      }
-      msg += `\nTotal: ₹${total.toFixed(2)}\n\nPlease confirm my order.`;
-      
-      const encodedMsg = encodeURIComponent(msg);
-      window.open(`https://wa.me/919949840365?text=${encodedMsg}`, "_blank");
-    }
+    function sendOrder() {
+      if (Object.keys(cart).length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      let msg = "Hello! I'd like to order:\n";
+      for (const item in cart) {
+        msg += `${item}: ${cart[item].qty.toFixed(2)} kg\n`;
+      }
+      
+      // Calculate total
+      let total = 0;
+      for (const item in cart) {
+        total += cart[item].qty * cart[item].price * 4;
+      }
+      msg += `\nTotal: ₹${total.toFixed(2)}\n\nPlease confirm my order.`;
+      
+      const encodedMsg = encodeURIComponent(msg);
+      window.open(`https://wa.me/919949840365?text=${encodedMsg}`, "_blank");
+    }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      showSlides();
-      renderProducts();
-      
-      // Cart panel toggle
-      document.getElementById("cartIcon").addEventListener("click", toggleCartPanel);
-      document.getElementById("closeCart").addEventListener("click", toggleCartPanel);
-      document.getElementById("overlay").addEventListener("click", toggleCartPanel);
-      
-      // Clear cart button
-      document.querySelector(".clear").addEventListener("click", () => {
-        for (const item in cart) {
-          delete cart[item];
-          updateStatus(item);
-        }
-        updateCartDisplay();
-        updateCartCount();
-      });
-      
-      // Order button
-      document.querySelector(".order").addEventListener("click", sendOrder);
-    });
-  </script>
+    document.addEventListener("DOMContentLoaded", () => {
+      showSlides();
+      renderProducts();
+      
+      // Cart panel toggle
+      document.getElementById("cartIcon").addEventListener("click", toggleCartPanel);
+      document.getElementById("closeCart").addEventListener("click", toggleCartPanel);
+      document.getElementById("overlay").addEventListener("click", toggleCartPanel);
+      
+      // Clear cart button
+      document.querySelector(".clear").addEventListener("click", () => {
+        for (const item in cart) {
+          delete cart[item];
+          updateStatus(item);
+        }
+        updateCartDisplay();
+        updateCartCount();
+      });
+      
+      // Order button
+      document.querySelector(".order").addEventListener("click", sendOrder);
+    });
+  </script>
 </body>
 </html>
