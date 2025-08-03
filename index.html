@@ -623,7 +623,7 @@ function currentSlide(n) {
 function nextSlide() {
   slideIndex++;
   if (slideIndex > document.querySelectorAll(".slides").length) {
-    slideIndex = 1;
+    slideIndex = 0;
   }
   showSlides(slideIndex);
 }
@@ -638,7 +638,7 @@ function prevSlide() {
 
 function autoSlides() {
   nextSlide();
-  slideTimer = setTimeout(autoSlides, 6000);
+  slideTimer = setTimeout(autoSlides, 5000);
 }
 
 const weights = [0.25, 0.5, 1, 2, 3];
