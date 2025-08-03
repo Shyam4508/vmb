@@ -617,23 +617,24 @@ function currentSlide(n) {
   autoSlides();
 }
 
-function plusSlides(n) {
-  clearTimeout(slideTimer);
-  slideIndex += n;
+function nextSlide() {
+  slideIndex += 1;
+  if (slideIndex > document.querySelectorAll(".slides").length) {
+    slideIndex = 1;
+  }
   showSlides(slideIndex);
-  autoSlides();
 }
 
-function backSlides(n) {
-  clearTimeout(slideTimer);
-  slideIndex -= n;
+function prevSlide() {
+  slideIndex -= 1;
+  if (slideIndex < 1) {
+    slideIndex = document.querySelectorAll(".slides").length;
+  }
   showSlides(slideIndex);
-  autoSlides();
 }
 
 function autoSlides() {
-  slideIndex++;
-  showSlides(slideIndex);
+  nextSlide();
   slideTimer = setTimeout(autoSlides, 6000);
 }
 
@@ -641,26 +642,22 @@ document.addEventListener("DOMContentLoaded", () => {
   showSlides(slideIndex);
   autoSlides();
 
-  // Touch swipe logic
-  const slideshowContainer = document.querySelector(".slideshow-container");
-  let startX = 0;
+slideshowContainer.addEventListener("touchend", (e) => {
+  const touchEndX = e.changedTouches[0].clientX;
+  const touchEndY = e.changedTouches[0].clientY;
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
 
-  slideshowContainer.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-  });
-
-  slideshowContainer.addEventListener("touchend", (e) => {
-    const endX = e.changedTouches[0].clientX;
-    const diffX = startX - endX;
-
-    if (Math.abs(diffX) > 50) {
-      if (diffX > 0) {
-        plusSlides(1); // swipe left
-      } else {
-        backSlides(1); // swipe right
-      }
+  if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
+    clearTimeout(slideTimer); // stop auto-slide temporarily
+    if (deltaX < 0) {
+      nextSlide(); // swipe left
+    } else {
+      prevSlide(); // swipe right
     }
-  });
+    autoSlides(); // resume auto-slide
+  }
+});
 });
 
     const products = [
