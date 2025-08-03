@@ -326,6 +326,11 @@
       .grid {
         grid-template-columns: 1fr;
       }
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
+        gap: 20px;
+      }
       .cart-buttons {
         flex-direction: column;
       }
