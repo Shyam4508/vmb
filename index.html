@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,6 +108,12 @@
       font-size: 2em;
       color: #33691e;
       margin-bottom: 30px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 0 10px;
     }
     .card {
       background: white;
@@ -317,7 +324,7 @@
         width: 100%;
       }
       .grid {
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: 1fr;
       }
       .cart-buttons {
         flex-direction: column;
@@ -325,20 +332,6 @@
       .cart button {
         width: 100%;
       }
-      .product-card {
-      background: #fff;
-      padding: 12px;
-      width: 50%;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
-    }
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 16px;
     }
     .whatsapp-float {
       position: fixed;
